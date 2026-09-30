@@ -1,0 +1,149 @@
+OBJETIVO
+Integrar conocimientos de Cloud Computing y habilidades de Docker, Kubernetes y AWS mediante el diseño e implementación de un sistema de registro y consulta de productos.
+SITUACIÓN PROBLEMÁTICA
+Lomax SA comercializa productos tecnológicos de diferentes categorías. Actualmente, el personal registra nombres, códigos y precios en hojas de cálculo, mientras las fotografías se comparten por mensajería y se guardan en carpetas de distintas computadoras. Cuando un cliente solicita información, el vendedor debe buscar los datos y localizar manualmente la imagen correspondiente.
+Esta forma de trabajo provoca códigos duplicados, productos sin fotografía y diferencias entre las listas que utilizan los vendedores. Además, las características no son iguales para todos los artículos, por ejemplo: un teclado requiere indicar su conexión y distribución; una pantalla, sus pulgadas y resolución. Las hojas existentes no permiten organizar estos atributos de manera consistente.
+Las fotografías de gran tamaño hacen lenta la consulta y, cuando se reemplaza una computadora o falla la aplicación, el equipo tiene dificultades para recuperar la información. Con la incorporación de nuevos vendedores, la empresa necesita que varias personas consulten el mismo catálogo y que un fallo de la aplicación no obligue a registrar nuevamente los productos.
+La empresa requiere una plataforma que permita registrar cada producto una sola vez, asociar sus características y fotografía, y mostrarlo en un catálogo común cuando su información esté completa. El sistema deberá rechazar datos inválidos, generar imágenes pequeñas para facilitar la consulta y permitir reintentar registros incompletos sin duplicarlos.
+El alcance se limita a registrar productos, mostrar el catálogo y consultar el detalle de un producto. La solución debe ser desarrollada en FLOCI.
+ARQUITECTURA DE LA SOLUCIÓN
+Frontend y reverse proxy
+	El frontend tendrá formulario de registro, catálogo con tarjetas y detalle del producto. Mostrará nombre, precio, categoría, fotografía y atributos.
+	El reverse proxy será la entrada de usuarios y dirigirá las solicitudes al frontend o a la API.
+RDS y DynamoDB
+	RDS almacenará categorías y productos: producto_id, código único, nombre, descripción, precio decimal, categoria_id, fecha y estado PENDIENTE o PUBLICADO. Exigirá campos obligatorios, precio no negativo y categoría existente.
+	DynamoDB almacenará atributos variables y datos de imagen por producto_id: imagen_original_key, miniatura_key y estado de procesamiento. El identificador será el mismo de RDS; la relación entre bases se verificará desde la API, no mediante una clave foránea entre servicios.
+S3 y Lambda
+	S3 utilizará dos buckets: uno para las fotografías originales y otro para las miniaturas generadas por Lambda.
+	Después de guardar el original, la API invocará Lambda de forma síncrona. La función validará la imagen, generará una miniatura de hasta 300 × 300 píxeles, conservando la proporción, y actualizará en DynamoDB su clave y estado LISTA o ERROR.
+ECR y EKS
+	ECR almacenará las imágenes Docker propias del frontend y backend.
+	EKS ejecutará los componentes de la aplicación con esas imágenes y permitirá verificar escalamiento y autorrecuperación.
+Flujo integral y publicación
+	La API registra el producto en RDS como PENDIENTE, guarda sus atributos en DynamoDB, carga la fotografía en S3 e invoca Lambda.
+	Solo cambia a PUBLICADO cuando confirma atributos y miniatura disponibles.
+	El catálogo combina datos de RDS y DynamoDB y recupera las imágenes de S3 a través de la API.
+SABER CONOCER
+Actividad 1. Preparación conceptual
+Investigar y sintetizar los conceptos necesarios para justificar la arquitectura y las decisiones técnicas del proyecto.
+La preparación deberá abordar:
+Cloud Computing
+Concepto	Definición
+Características del Cloud Computing	
+Escalabilidad vertical y horizontal	
+Virtualización	
+Iaas, Paas y Saas	
+Tipos de nube	
+Ventajas y limitaciones de los servicios cloud	
+
+Contenedores
+Concepto	Definición
+Concepto de contenedor	
+Imagen y contenedor	
+Dockerfile	
+Redes	
+Volúmenes	
+Docker compose	
+Ventajas y limitaciones de Docker	
+
+Kubernetes
+Concepto	Definición
+Arquitectura básica	
+Cluster	
+Pod	
+Deployment	
+Service	
+Escalamiento	
+Autorecuperación	
+
+AWS
+Concepto	Definición
+RDS	
+DynamoDB	
+S3	
+Lambda	
+ECR	
+EKS	
+
+Resultado
+Producto 1: Síntesis conceptual.
+Entregar las tablas completas y conocer la relación de los conceptos con la solución.
+SABER HACER
+Realizar las etapas siguientes en orden. Preparar al menos 20 productos publicados, distribuidos en 3 categorías, con dos conjuntos distintos de atributos y una fotografía por producto.
+Etapa 1. Diseño de la arquitectura
+Diseñar el registro y la consulta del catálogo con íconos oficiales de AWS para los servicios. Señalar expresamente el entorno local FLOCI, frontend, proxy, API, redes, protocolos, puertos, almacenamiento y ubicación de los componentes en Kubernetes.
+Entregable P2: diagrama de arquitectura.
+Verificación E1: explicar el funcionamiento de la solución utilizando el diagrama. Al finalizar, contrastar el diagrama con los recursos desplegados.
+Etapa 2. Persistencia con RDS y DynamoDB
+Crear la base RDS y la tabla DynamoDB. Entregar un modelo relacional, esquema de atributos y scripts reproducibles de creación y carga.
+	RDS: probar inserción válida, código duplicado, precio negativo y categoría inexistente. Las operaciones inválidas deben rechazarse sin dejar registros parciales.
+	DynamoDB: guardar y recuperar por producto_id, productos con atributos diferentes. Verificar que cada identificador corresponda al producto esperado en RDS. Las referencias de imágenes podrán estar pendientes hasta la etapa 3.
+Entregable P3: RDS y DynamoDB creados y con datos cargados.
+Verificación E2: consultas SQL y get-item de DynamoDB, salidas de las pruebas de restricciones y comparación de identificadores y valores antes y después de reiniciar los componentes de persistencia sin borrar volúmenes. La carga inicial debe poder repetirse sin duplicar registros.
+Etapa 3. AWS con S3 y Lambda
+Crear los buckets. Aceptar JPEG o PNG válidos de hasta 5 Mb. Lambda recibe producto_id, bucket y clave del original; produce una miniatura proporcional de máximo 300 × 300 píxeles y guarda su referencia y estado en DynamoDB.
+	Invocar la función mediante CLI o script durante esta etapa; el backend asumirá luego la invocación síncrona. Usar una clave de salida determinista por imagen para que repetir la solicitud no cree miniaturas adicionales.
+	No publicar el producto cuando la imagen sea inválida o falle el procesamiento. Conservar el estado y permitir reintentar.
+Entregable P4: S3 y Lambda
+Verificación E3: guardar la salida de lambda invoke y el resultado funcional de la función. No basta con un código exitoso de transporte: comprobar que la ejecución no reporta error y que creó el archivo esperado.
+	Listar originales/ y miniaturas/. Recuperar esa misma clave mediante get-object y abrir el archivo descargado.
+	Comparar dimensiones: un original de prueba de 1200 × 800 debe producir 300 × 200. Adjuntar ambos archivos y la salida de dimensiones. Recuperar con get-item la referencia de DynamoDB y comprobar que coincide con el objeto descargado.
+	Repetir la invocación para la misma imagen: debe mantenerse la clave de salida sin objetos extra. Probar un archivo inválido y comprobar estado ERROR y ausencia de una miniatura válida para ese caso.
+Etapa 4. Backend con API y endpoints
+	Implementar la API y su Dockerfile.
+	El registro base creará un producto pendiente; cargar la imagen completará su publicación.
+Endpoint	Operación y verificación esperada
+GET /categorias	200: devuelve las categorías almacenadas en RDS.
+POST /productos	Recibe código, nombre, descripción, precio, categoria_id y atributos. 201: devuelve producto_id y PENDIENTE. Validar en RDS y DynamoDB.
+POST /productos/{id}/imagen	Recibe JPEG o PNG, guarda original e invoca Lambda. 200: PUBLICADO solo tras verificar miniatura y atributos.
+POST /productos/{id}/reprocesar	Reintenta la imagen guardada. 200: publica si completa; 409 si no existe original. Repetir no duplica objetos.
+GET /productos	200: lista solamente publicados y combina datos principales, atributos y referencia de miniatura.
+GET /productos/{id}	200: detalle y estado del producto; 404 si no existe. Permite verificar registros pendientes.
+GET /productos/{id}/imagen	200: recupera bytes de la miniatura de S3, con Content-Type correcto; 404 si no está disponible.
+Para entradas inválidas devolver 400, código de producto duplicado 409, archivo mayor a 5 Mb 413 y formato no permitido 415. Si falla un servicio dependiente, informar 502 o 503 y conservar PENDIENTE. Documentar la respuesta que identifica el paso fallido.
+Entregable P5: API y endpoints.
+Verificación E4: ejecutar todos los endpoints y guardar el reporte.
+La prueba exitosa debe verificar directamente RDS, DynamoDB y S3, además de la respuesta HTTP. Comparar el archivo obtenido desde el endpoint de imagen con el descargado.
+Etapa 5. Frontend con dashboard del catálogo
+Construir las tres vistas: registrar producto, catálogo y detalle.
+	El formulario incluirá atributos variables y fotografía; mostrará validaciones, estado de registro, errores y opción de reintento.
+	El catálogo mostrará miniatura, nombre, precio y categoría.
+	El detalle incluirá descripción y atributos.
+Integrar frontend, backend y proxy con Docker Compose, redes y variables. Mostrar datos provenientes de los servicios y conservar la información al actualizar el navegador. No se requieren indicadores de ventas ni gestión de inventario.
+Entregable P6: Frontend.
+Verificación E5: registrar un producto nuevo desde el formulario, observar su publicación y mostrar su detalle. Entregar capturas con producto_id, más solicitudes y respuestas HTTP. Confirmar el registro en RDS y DynamoDB y descargar su miniatura desde S3.
+Probar código duplicado y archivo inválido: la interfaz debe informar el error y el producto incompleto no debe aparecer en el catálogo. Demostrar los 20 productos publicados en el catálogo y en las consultas de datos.
+Etapa 6. Publicación de imágenes en ECR
+Crear repositorios ECR en FLOCI para frontend y backend. Construir, etiquetar y publicar las imágenes propias con una versión vinculada al commit de entrega. Documentar autenticación, dirección del registro y conectividad desde Docker y Kubernetes.
+Entregable P7: Imágenes en ECR.
+Verificación E6: adjuntar las salidas exitosas de docker push y consultar ecr describe-images o list-images en FLOCI.
+Descargar cada imagen mediante docker pull usando su referencia remota, preferentemente desde un entorno sin copia previa.
+Ejecutar las imágenes descargadas y consultar la API y el frontend para comprobar que contienen la aplicación entregada. Las imágenes se consumirán desde ECR en la etapa siguiente.
+Etapa 7. Despliegue y validación en EKS
+Crear el clúster EKS mediante FLOCI. Configurar acceso a las imágenes de ECR y a RDS, DynamoDB, S3 y Lambda desde los Pods. El proxy seguirá siendo la entrada de usuarios.
+RDS y DynamoDB proporcionan persistencia fuera de los Pods de aplicación. Mantener el almacenamiento del entorno FLOCI configurado en las etapas anteriores.
+Entregable P8: EKS.
+Verificación E7: Mostrar los pods. Acreditar que EKS ejecuta las imágenes publicadas en ECR.
+	Escalar backend de 1 a 3 réplicas. Mostrar las tres Ready y solicitudes atendidas por cada Pod mediante logs o un identificador de instancia en las respuestas.
+	Eliminar un Pod y registrar su UID antes y el UID del reemplazo después. Mostrar recuperación del número de réplicas y funcionamiento del catálogo.
+	Registrar un producto nuevo desde la aplicación en EKS, verificar datos en RDS y DynamoDB, descargar su miniatura desde S3 y comprobar su aparición en el catálogo. Recrear Pods y repetir consultas: el mismo producto debe permanecer disponible.
+Portafolio de evidencias técnicas
+Entregable P9: repositorio con README, scripts, configuración de ejemplo, código, diagramas. Organizar evidencias E1 a E7 por etapa.
+DEBE SER
+Organización y trabajo colaborativo
+Cada integrante debe aportar trabajo verificable y comprender el flujo completo. Asignar roles y tareas por etapa, mantener su estado en un tablero y relacionarlas con los entregables.
+	Identificar a cada miembro y su cuenta Github. Presentar commits sustantivos de código, pruebas, scripts, diseño o documentación, vinculados con las tareas; la cantidad de commits por sí sola no demuestra participación.
+Entregable P10: Repositorio de Github.
+Entregar enlace de repositorio en Github.
+Verificación: se seleccionará aportes de cada integrante, revisará el cambio o archivo y solicitará su explicación y demostración. Cualquier integrante podrá ser consultado sobre otras partes de la solución.
+DEFENSA DEL PROYECTO
+La defensa combinará preguntas del SABER CONOCER con retos sobre los entregables de las siete etapas. Se evaluará comprensión individual y capacidad de verificar el funcionamiento del sistema.
+	Explicar el diagrama de arquitectura.
+	Explicar el recorrido de un producto y por qué un registro incompleto permanece pendiente.
+	Demostrar rechazo de un código duplicado, consultar atributos variables y verificar persistencia tras reinicio.
+	Localizar y descargar la miniatura desde S3, comprobar sus dimensiones y repetir la invocación de Lambda sin duplicados.
+	Ejecutar endpoints con datos válidos e inválidos, interpretar respuestas y completar un registro pendiente sin crear otro producto.
+	Registrar y consultar un producto desde el dashboard y demostrar que sus datos provienen de los servicios.
+	Mostrar push, digest remoto, pull y ejecución de una imagen recuperada desde ECR.
+	Relacionar las imágenes de los Pods con ECR, escalar a tres réplicas y demostrar reemplazo de un Pod sin pérdida de productos.
+Las respuestas conceptuales deberán relacionarse con las decisiones implementadas.

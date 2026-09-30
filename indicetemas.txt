@@ -1,0 +1,103 @@
+# 📘 INFORME TÉCNICO: ARQUITECTURAS CLOUD-NATIVE Y SERVICIOS MANAGEROS EN AWS (ENTORNO LOCAL CON FLOCI)
+
+## **MÓDULO 1: FUNDAMENTOS DE ALMACENAMIENTO EN LA NUBE (AMAZON S3)**
+**1.1. Arquitectura de Almacenamiento de Objetos**
+*   Concepto de Buckets, Objetos y Claves (Keys).
+*   Estructura plana y simulación de jerarquía mediante prefijos (carpetas lógicas).
+*   Metadatos de objetos (Content-Type, tamaños, etiquetas).
+**1.2. Operaciones y Gestión de Datos**
+*   API REST de S3: `PutObject`, `GetObject`, `ListObjectsV2`, `DeleteObject`.
+*   Políticas de Bucket (Bucket Policies) y control de acceso público (JSON IAM).
+**1.3. Casos de Uso Avanzados**
+*   Alojamiento de Sitios Web Estáticos (Static Website Hosting).
+*   Almacenamiento de Data Lakes (Buckets de datos crudos vs. buckets de resultados).
+*   Gestión de activos digitales (Imágenes originales vs. miniaturas procesadas).
+
+## **MÓDULO 2: ANALÍTICA DE DATOS Y PIPELINES SERVERLESS**
+**2.1. Catálogo de Metadatos (AWS Glue)**
+*   Glue Data Catalog: Registro centralizado de esquemas y metadatos.
+*   Definición de Bases de Datos y Tablas mediante JSON (StorageDescriptor, SerDe, delimitadores).
+**2.2. Consultas Interactivas (Amazon Athena)**
+*   Motor de consultas SQL sobre S3 (Serverless).
+*   Integración con Glue Data Catalog para mapeo de esquemas.
+*   Modelo de facturación por datos escaneados.
+**2.3. Emulación de Motores Analíticos (floci-duck / DuckDB)**
+*   Uso de DuckDB como motor OLAP local para emular Athena.
+*   Inyección de DDL de Glue en esquemas de DuckDB.
+*   Ejecución de consultas SQL de agregación (`SUM`, `COUNT`, `GROUP BY`) sobre archivos CSV en S3.
+
+## **MÓDULO 3: BASES DE DATOS NOSQL Y ARQUITECTURAS DE MICROSERVICIOS**
+**3.1. Modelado de Datos en Amazon DynamoDB**
+*   Diseño de tablas NoSQL: Clave de Partición (Partition Key / Hash) y Clave de Ordenamiento (Sort Key / Range).
+*   Diferencias entre `Query` (eficiente, basado en claves) y `Scan` (ineficiente, lee toda la tabla).
+*   Escrituras masivas mediante `BatchWrite` para optimización de rendimiento.
+**3.2. Desarrollo de Backends API (FastAPI / Node.js)**
+*   Creación de endpoints RESTful (`GET`, `POST`, `DELETE`).
+*   Manejo de variables de entorno y configuración de clientes AWS SDK (`boto3` para Python, `@aws-sdk/client-dynamodb` para Node.js).
+*   Configuración de CORS (Cross-Origin Resource Sharing) para integración con Frontends.
+**3.3. Persistencia Relacional Administrada (Amazon RDS)**
+*   Despliegue de instancias de PostgreSQL/MySQL.
+*   Conexión desde aplicaciones mediante endpoints dinámicos y puertos asignados.
+*   Creación de esquemas, tablas e inserción de datos mediante scripts de inicialización.
+
+## **MÓDULO 4: COMPUTACIÓN SERVERLESS Y PROCESAMIENTO ORIENTADO A EVENTOS**
+**4.1. Fundamentos de AWS Lambda**
+*   Concepto de Serverless y ejecución efímera de código.
+*   Empaquetado de funciones (ZIP files con dependencias) y configuración de Runtimes (Node.js, Python).
+*   Roles IAM (Execution Roles) y permisos de ejecución.
+**4.2. Arquitecturas Event-Driven (Dirigidas por Eventos)**
+*   Configuración de Notificaciones de Eventos en S3 (`s3:ObjectCreated:*`).
+*   Disparadores (Triggers) asíncronos hacia Lambda.
+*   Estructura del payload JSON de eventos S3 (extracción de `bucket.name` y `object.key`).
+**4.3. Casos de Uso de Procesamiento**
+*   Validación y transformación de imágenes (generación de miniaturas).
+*   Registro de historial de auditoría (Event Sourcing) en DynamoDB tras operaciones en RDS.
+
+## **MÓDULO 5: CONTENERIZACIÓN Y ORQUESTACIÓN (DOCKER, ECR Y EKS)**
+**5.1. Fundamentos de Docker**
+*   Creación de imágenes optimizadas (`Dockerfile`, `node:18-alpine`, `python:3.11-slim`).
+*   Gestión de dependencias y contextos de construcción.
+*   Redes de Docker y resolución de nombres entre contenedores.
+**5.2. Registro de Contenedores (Amazon ECR)**
+*   Creación de repositorios y autenticación de Docker (`docker login`).
+*   Etiquetado (`docker tag`) y publicación (`docker push`) de imágenes usando URIs de Floci.
+**5.3. Orquestación con Kubernetes (Amazon EKS)**
+*   Conceptos de Clúster, Nodos, Pods, Deployments y Services.
+*   Uso de `kubectl` para despliegue y verificación de estados (`RUNNING`, `PENDING`).
+*   Gestión de secretos (`Secrets`) para inyección segura de credenciales de bases de datos.
+*   Exposición de servicios mediante `NodePort` y `port-forward` para pruebas locales.
+
+## **MÓDULO 6: ALTA DISPONIBILIDAD, BALANCEO Y ESCALAMIENTO**
+**6.1. Balanceo de Carga (Application Load Balancer - ALB)**
+*   Distribución de tráfico HTTP/HTTPS (Capa 7).
+*   Configuración de Target Groups y Health Checks (Verificaciones de estado).
+**6.2. Orquestación de Tareas (Amazon ECS)**
+*   Definición de Tareas (Task Definitions) y especificación de recursos (CPU/Memoria).
+*   Servicios ECS (ECS Services) para mantener el estado deseado (autorecuperación).
+**6.3. Escalamiento Automático (Auto Scaling & CloudWatch)**
+*   Métricas de monitoreo (CPU, Request Count Per Target).
+*   Configuración de Alarmas en Amazon CloudWatch.
+*   Políticas de Application Auto Scaling para ajustar la capacidad deseada (escalamiento horizontal de 1 a N Tasks).
+
+## **MÓDULO 7: ARQUITECTURAS INTEGRALES Y PATRONES DE DISEÑO**
+**7.1. Patrones de Transacciones Distribuidas**
+*   Patrón Saga / Transacción de dos fases (2PC) simplificado: Estado `PENDIENTE` -> Procesamiento -> Estado `PUBLICADO`.
+*   Consistencia eventual y reintentos idempotentes.
+**7.2. Reverse Proxy y Enrutamiento**
+*   Uso de Nginx / Ingress como punto único de entrada.
+*   Enrutamiento basado en rutas (Frontend estático vs. API Backend).
+**7.3. Separación de Responsabilidades (Separation of Concerns)**
+*   Desacoplamiento de capas: Presentación (Frontend), Lógica (Backend/API), Persistencia Relacional (RDS), Persistencia NoSQL (DynamoDB) y Procesamiento (Lambda).
+
+## **MÓDULO 8: INGENIERÍA DE ENTORNOS LOCALES Y HERRAMIENTAS (DEVOPS)**
+**8.1. Emulación de AWS con Floci**
+*   Despliegue de Floci mediante Docker Compose.
+*   Configuración de permisos (`privileged: true`, montaje de `/var/run/docker.sock`) para permitir a Floci levantar contenedores reales (RDS, Lambda, EKS).
+*   Gestión de endpoints locales (`http://localhost:4566`).
+**8.2. Entorno de Desarrollo en Linux (CachyOS / Hyprland)**
+*   Uso de `fish shell` y activación de entornos virtuales (`venv`, `pnpm`).
+*   Manejo de variables de entorno (`export AWS_...`).
+*   Automatización de despliegues mediante scripts de inicialización (Node.js / Python) con sistemas de *polling* (espera activa) para servicios asíncronos.
+**8.3. Interacción con AWS**
+*   Uso avanzado de AWS CLI (formateo con `--query` y `--output table/json`).
+*   Integración de AWS SDK en código (manejo de errores, timeouts, y conexiones).

@@ -1,0 +1,49 @@
+%% LOMAX SA - Diagrama de arquitectura (fuente textual versionada)
+%% Etapa 1 - Diseno de arquitectura
+%% Render: GitHub / VS Code (Markdown Preview) / mermaid.live
+%% El entregable visual P2 con ICONOS OFICIALES AWS es docs/arquitectura.drawio
+%% exportado a docs/evidencias/ETAPA_1/arquitectura.png
+flowchart TB
+
+  U(["Usuario / Navegador"])
+
+  subgraph FLOCI["FLOCI - Emulacion local de AWS (Docker Compose) - endpoint http://localhost:4566"]
+    direction TB
+
+    subgraph EKS["Amazon EKS - Cluster Kubernetes - red de Pods y DNS interno de servicio"]
+      direction TB
+      PX["Nginx Reverse Proxy - Deployment 1 replica - Service NodePort 30080 -> host :8080"]
+      FE["Frontend estatico - Deployment 2 replicas - Service ClusterIP :80"]
+      API["API Node.js 22 + pnpm - Deployment escalable 1 a 3 - Service ClusterIP :3000"]
+      PX -- "HTTP :80 ruta /" --> FE
+      PX -- "HTTP :3000 ruta /api/*" --> API
+    end
+
+    subgraph STORAGE["Almacenamiento - vive FUERA de los Pods (persiste si los Pods mueren)"]
+      direction LR
+      RDS[("Amazon RDS - PostgreSQL 15 - categorias + productos - TCP :5432")]
+      DDB[("Amazon DynamoDB - atributos variables + estado imagen - TCP :8000 - PK producto_id")]
+      S3O[("Amazon S3 - lomax-originales - prefijo originales/")]
+      S3M[("Amazon S3 - lomax-miniaturas - prefijo miniaturas/ - max 300x300")]
+    end
+
+    LAMB["AWS Lambda - lomax-miniatura - Python 3.12 + Pillow - invocacion SINCRONA RequestResponse"]
+
+    ECR[("Amazon ECR - lomax/frontend - lomax/backend - lomax/proxy")]
+  end
+
+  U -- "1. HTTP :8080" --> PX
+
+  API -- "2. SQL INSERT y UPDATE de productos y categorias" --> RDS
+  API -- "3. PutItem de atributos variables" --> DDB
+  API -- "4. PutObject del original JPEG o PNG hasta 5 MB" --> S3O
+  API -- "5. Invoke sincrono con producto_id, bucket y clave" --> LAMB
+  LAMB -- "6. GetObject del original" --> S3O
+  LAMB -- "7. PutObject de la miniatura con clave determinista" --> S3M
+  LAMB -- "8. UpdateItem del estado LISTA o ERROR" --> DDB
+  API -- "9. GetObject de la miniatura con Content-Type correcto" --> S3M
+  API -- "10. PUBLICA solo si atributos completos y estado LISTA" --> RDS
+
+  ECR -. "11. docker pull al iniciar los Pods" .-> PX
+  ECR -. "11. docker pull al iniciar los Pods" .-> FE
+  ECR -. "11. docker pull al iniciar los Pods" .-> API

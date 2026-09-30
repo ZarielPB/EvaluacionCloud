@@ -1,0 +1,16 @@
+node_modules/
+pnpm-debug.log*
+dist/
+build/
+.venv/
+venv/
+__pycache__/
+*.pyc
+.env
+.env.local
+*.log
+.DS_Store
+.idea/
+.vscode/
+.aws/
+tmp/
