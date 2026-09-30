@@ -16,7 +16,7 @@ hojas de cálculo y las carpetas de imágenes dispersas.
   y autorrecuperación.
 
 Diagrama: `docs/arquitectura.drawio` · Fuente textual: `docs/arquitectura.mmd` ·
-PNG: `docs/evidencias/ETAPA_1/arquitectura.png` · Documento: `docs/ETAPA_1_ARQUITECTURA.md`
+PNG: `docs/evidencias/ETAPA_1/arquitectura.png` · Documento: `docs/ETAPA_1_ARQUITECTURA.md` · Persistencia: `docs/ETAPA_2_PERSISTENCIA.md`
 
 ## Estructura
 

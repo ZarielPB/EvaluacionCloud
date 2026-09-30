@@ -162,6 +162,13 @@ arbirto y el endpoint de reprocesamiento completa el registro sin duplicarlo.
 > exactamente el contraste entre diagrama y recursos desplegado que pide la
 > verificacion E1.
 
+> **Nota corregida en la Etapa 2 a tomar en cuenta:** los puertos reales medidos son RDS
+> `7001` y DynamoDB `4566` (endpoint unico de FLOCI), no los puertos de
+> servicio tecnico del diagrama. El puerto `8000` no responde. Esta
+> actualizacion es el contraste entre diagrama y recursos desplegado que
+> pide la verificacion E1. El motor real es PostgreSQL 15.19, aunque
+> `describe-db-instances` reporte 16.3.
+
 **Segmentacion de redes**
 - En **Docker Compose (Etapas 4-5)**: dos redes bridge, `lomax-edge` (proxy y
   frontend) y `lomax-data` (proxy, api y datos). La resolucion de nombres entre
@@ -274,7 +281,7 @@ contrato que las demas etapas deben cumplir.
 | Tarea | Responsable | Etapa | Estado |
 |---|---|---|---|
 | Arquitectura y diagrama | ZarielPB | 1 | Hecho |
-| Modelo RDS + scripts de carga | ZarielPB | 2 | Pendiente |
+| Modelo RDS + scripts de carga | jeysi702 | 2 | Hecho |
 | Tabla DynamoDB + atributos | ZarielPB | 2 | Pendiente |
 | S3 + Lambda miniaturas | ZarielPB | 3 | Pendiente |
 | API Node.js + endpoints | (compañera) | 4 | Pendiente |
