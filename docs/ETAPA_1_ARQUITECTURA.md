@@ -276,14 +276,14 @@ contrato que las demas etapas deben cumplir.
    (`CREATE TABLE IF NOT EXISTS`, `ON CONFLICT DO NOTHING`) para poder repetirlos
    sin duplicar.
 
-**Tablero de tareas (requerido por el docente):**
+**Tablero de tareas (requerido por el docente).** El tablero canonico, actualizado en cada etapa, esta en `README.md`. Ultima actualizacion: Etapa 3.
 
 | Tarea | Responsable | Etapa | Estado |
 |---|---|---|---|
 | Arquitectura y diagrama | ZarielPB | 1 | Hecho |
 | Modelo RDS + scripts de carga | jeysi702 | 2 | Hecho |
 | Tabla DynamoDB + atributos | jeysi702 | 2 | Hecho |
-| S3 + Lambda miniaturas | ZarielPB | 3 | Pendiente |
+| S3 + Lambda miniaturas | ZarielPB | 3 | Hecho |
 | API Node.js + endpoints | (compañera) | 4 | Pendiente |
 | Frontend dashboard | (compañera) | 5 | Pendiente |
 | ECR build/push | (compañera) | 6 | Pendiente |

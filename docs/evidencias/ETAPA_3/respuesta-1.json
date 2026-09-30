@@ -1,0 +1,27 @@
+{
+    "statusCode": 200,
+    "ok": true,
+    "producto_id": 1,
+    "estado_procesamiento": "LISTA",
+    "origen": {
+        "bucket": "lomax-originales",
+        "clave": "originales/1.png"
+    },
+    "miniatura_key": "miniaturas/1.jpg",
+    "bucket_miniaturas": "lomax-miniaturas",
+    "detalle": "Miniatura generada y registrada",
+    "procesado_en": "2026-09-30T13:50:27.479140+00:00",
+    "dimensiones": {
+        "original": {
+            "ancho": 1200,
+            "alto": 800,
+            "bytes": 47888
+        },
+        "miniatura": {
+            "ancho": 300,
+            "alto": 200,
+            "bytes": 3810
+        },
+        "lado_maximo": 300
+    }
+}

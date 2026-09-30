@@ -1,0 +1,14 @@
+{
+    "statusCode": 422,
+    "ok": false,
+    "producto_id": 22,
+    "estado_procesamiento": "ERROR",
+    "origen": {
+        "bucket": "lomax-originales",
+        "clave": "originales/22.jpg"
+    },
+    "miniatura_key": "miniaturas/22.jpg",
+    "bucket_miniaturas": "lomax-miniaturas",
+    "detalle": "No se genero miniatura: El contenido no es una imagen valida: cannot identify image file <_io.BytesIO object at 0x7f1e6e38a8e0>",
+    "procesado_en": "2026-09-30T13:59:35.602511+00:00"
+}
