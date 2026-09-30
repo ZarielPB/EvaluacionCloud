@@ -31,21 +31,25 @@ PNG: `docs/evidencias/ETAPA_1/arquitectura.png` · Documento: `docs/ETAPA_1_ARQU
 
 - Gestor de paquetes **exclusivamente `pnpm`** en todo el ecosistema Node.js.
 - Python solo donde se requiera (Lambda), siempre dentro de un `venv`.
-- Toda evidencia organized en `docs/evidencias/ETAPA_<N>/`.
+- Toda evidencia organizada en `docs/evidencias/ETAPA_<N>/`.
 
-## Integrantes
+## Integrantes y Asignación de Etapas
 
-| Integrante | Rol | Github |
+| Integrante | GitHub | Etapas Asignadas |
 |---|---|---|
-| ZarielPB | Etapas 1-3 (arquitectura, persistencia, S3/Lambda) | pendiente |
-| jeysi702 | Etapas 4-7 (API, frontend, ECR, EKS) | pendiente |
+| ZarielPB | @ZarielPB | 1 (Arquitectura), 3 (S3/Lambda), 5 (Frontend), 7 (EKS) |
+| jeysi702 | @jeysi702 | 2 (Persistencia), 4 (Backend API), 6 (ECR) |
 
-## Estado
+## Estado del Proyecto
 
-- [x] Etapa 1 — Diseño de la arquitectura
+- [x] Etapa 1 — Diseño de la arquitectura ✅
 - [ ] Etapa 2 — Persistencia con RDS y DynamoDB
 - [ ] Etapa 3 — AWS con S3 y Lambda
 - [ ] Etapa 4 — Backend con API y endpoints
 - [ ] Etapa 5 — Frontend con dashboard del catálogo
 - [ ] Etapa 6 — Publicación de imágenes en ECR
 - [ ] Etapa 7 — Despliegue y validación en EKS
+
+## Enlaces
+
+- **Repositorio:** https://github.com/ZarielPB/EvaluacionCloud
