@@ -282,7 +282,7 @@ contrato que las demas etapas deben cumplir.
 |---|---|---|---|
 | Arquitectura y diagrama | ZarielPB | 1 | Hecho |
 | Modelo RDS + scripts de carga | jeysi702 | 2 | Hecho |
-| Tabla DynamoDB + atributos | ZarielPB | 2 | Pendiente |
+| Tabla DynamoDB + atributos | jeysi702 | 2 | Hecho |
 | S3 + Lambda miniaturas | ZarielPB | 3 | Pendiente |
 | API Node.js + endpoints | (compañera) | 4 | Pendiente |
 | Frontend dashboard | (compañera) | 5 | Pendiente |
