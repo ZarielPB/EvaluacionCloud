@@ -1,0 +1,40 @@
+E4 - El endpoint entrega los mismos bytes que el objeto de S3
+Fecha (UTC): 2026-09-30T17:00:44Z
+Producto: 30
+
+== 1. Descarga por el endpoint ==
+HTTP/1.1 200 OK
+Content-Type: image/jpeg
+Content-Length: 3810
+ETag: "cbf28c63ead4830b59d902481da2051c"
+
+== 2. Descarga directa de S3 ==
+bytes_descargados=3810
+
+== 3. sha256 de ambos ==
+7632a7268bcab8a78e254b568e61a01f8c5c93c3bb3200567de163eefec8c91c  /tmp/opencode/et4/api.jpg
+7632a7268bcab8a78e254b568e61a01f8c5c93c3bb3200567de163eefec8c91c  /tmp/opencode/et4/s3.jpg
+
+== 4. Comparacion byte a byte ==
+IDENTICOS: cmp no reporta diferencias
+
+== 5. Contenido real de la imagen ==
+formato   : JPEG
+dimensiones: (300, 200)
+modo      : RGB
+
+== 6. Atributos que el catalogo combina ==
+{
+  "producto_id": 30,
+  "codigo": "LOM-9600",
+  "nombre": "Regresion final",
+  "precio": 75.5,
+  "categoria": "AUDIO",
+  "estado": "PUBLICADO",
+  "atributos": {
+    "conexion": "Bluetooth",
+    "potencia": "30W"
+  },
+  "miniatura_key": "miniaturas/30.jpg",
+  "imagen_disponible": true
+}

@@ -1,0 +1,22 @@
+contenedor=lomax-api imagen=backend-api estado=Up 15 minutes
+
+Imagen usada por el contenedor:
+id=sha256:ae7fbf8227c92b836cfd539893e196a4a77b2da36117d2ccb00279e16738e5a9 creada=2026-09-30T12:47:36.104512291-04:00 tamano=484119920
+
+Usuario efectivo dentro del contenedor:
+uid=1000(node) gid=1000(node) groups=1000(node)
+
+Rutas montadas en la imagen:
+/app/src:
+aws.js
+config.js
+db.js
+errors.js
+middleware.js
+routes
+server.js
+
+/app/src/routes:
+categorias.js
+imagen.js
+productos.js

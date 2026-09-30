@@ -1,0 +1,1 @@
+{"estado":"ok","servicios":{"rds":{"ok":true,"base":"lomax","version":"PostgreSQL 15.19"},"s3":{"ok":true,"buckets":["lomax-originales","awslambda-us-east-1-tasks","lomax-miniaturas"]},"dynamodb":{"ok":true,"tabla":"productos_atributos","estado":"ACTIVE","items":29},"lambda":{"ok":true,"funcion":"lomax-miniatura","estado":"Active"}}}

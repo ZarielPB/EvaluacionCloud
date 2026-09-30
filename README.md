@@ -22,6 +22,7 @@ hojas de cálculo y las carpetas de imágenes dispersas.
 | 1 — Diseño de la arquitectura | [`docs/ETAPA_1_ARQUITECTURA.md`](docs/ETAPA_1_ARQUITECTURA.md) | [`evidencias/ETAPA_1/`](docs/evidencias/ETAPA_1/) |
 | 2 — Persistencia RDS y DynamoDB | [`docs/ETAPA_2_PERSISTENCIA.md`](docs/ETAPA_2_PERSISTENCIA.md) | [`evidencias/ETAPA_2/`](docs/evidencias/ETAPA_2/) |
 | 3 — AWS con S3 y Lambda | [`docs/ETAPA_3_S3_LAMBDA.md`](docs/ETAPA_3_S3_LAMBDA.md) | [`evidencias/ETAPA_3/`](docs/evidencias/ETAPA_3/) |
+| 4 — API y Dockerfile | [`docs/ETAPA_4_BACKEND_API.md`](docs/ETAPA_4_BACKEND_API.md) | [`evidencias/ETAPA_4/`](docs/evidencias/ETAPA_4/) |
 
 - Diagrama de arquitectura: [`docs/arquitectura.drawio`](docs/arquitectura.drawio) ·
   fuente textual [`docs/arquitectura.mmd`](docs/arquitectura.mmd) ·
@@ -30,7 +31,7 @@ hojas de cálculo y las carpetas de imágenes dispersas.
 ## Estructura
 
     frontend/          Aplicación web (formulario, catálogo, detalle)
-    backend/           API Node.js 22 (pnpm) + Dockerfile
+    backend/           API Node.js 26 + Express (pnpm) + Dockerfile
     proxy/             Configuración de Nginx (reverse proxy)
     k8s/               Manifiestos de EKS (Deployments, Services, Secrets)
     lambda_function/   Función AWS Lambda de miniaturas (Python 3.12 + Pillow)
@@ -60,7 +61,7 @@ hojas de cálculo y las carpetas de imágenes dispersas.
 | Modelo RDS + scripts de carga | jeysi702 | 2 | P3 | Hecho |
 | Tabla DynamoDB + atributos variables | jeysi702 | 2 | P3 | Hecho |
 | S3 + Lambda miniaturas 300x300 | ZarielPB | 3 | P4 | Hecho |
-| API Node.js + endpoints | jeysi702 | 4 | P5 | Pendiente |
+| API Node.js + endpoints | jeysi702 | 4 | P5 | Hecho |
 | Frontend dashboard del catálogo | ZarielPB | 5 | P6 | Pendiente |
 | Publicación de imágenes en ECR | jeysi702 | 6 | P7 | Pendiente |
 | Despliegue y validación en EKS | ZarielPB | 7 | P8 | Pendiente |
@@ -71,7 +72,7 @@ hojas de cálculo y las carpetas de imágenes dispersas.
 - [x] Etapa 1 — Diseño de la arquitectura
 - [x] Etapa 2 — Persistencia con RDS y DynamoDB
 - [x] Etapa 3 — AWS con S3 y Lambda
-- [ ] Etapa 4 — Backend con API y endpoints
+- [x] Etapa 4 — Backend con API y endpoints
 - [ ] Etapa 5 — Frontend con dashboard del catálogo
 - [ ] Etapa 6 — Publicación de imágenes en ECR
 - [ ] Etapa 7 — Despliegue y validación en EKS

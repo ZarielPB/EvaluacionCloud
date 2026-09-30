@@ -1,0 +1,176 @@
+Fecha (UTC): 2026-09-30T16:58:51.112Z
+RDS: localhost:7001/lomax
+AWS: http://localhost:4566   tabla: productos_atributos
+
+========================================================================
+RDS - catalogo y estados
+========================================================================
+
+Conteo por estado
+┌─────────┬─────────────┬───────┐
+│ (index) │ estado      │ total │
+├─────────┼─────────────┼───────┤
+│ 0       │ 'PENDIENTE' │ 4     │
+│ 1       │ 'PUBLICADO' │ 22    │
+└─────────┴─────────────┴───────┘
+
+Los PENDIENTE no son visibles en el catalogo
+┌─────────┬──────────────────────┐
+│ (index) │ visibles_en_catalogo │
+├─────────┼──────────────────────┤
+│ 0       │ 22                   │
+└─────────┴──────────────────────┘
+
+Productos PENDIENTE (sin miniatura confirmada)
+┌─────────┬─────────────┬────────────┬────────────────────────┐
+│ (index) │ producto_id │ codigo     │ nombre                 │
+├─────────┼─────────────┼────────────┼────────────────────────┤
+│ 0       │ 21          │ 'LOM-9001' │ 'Producto Prueba 1'    │
+│ 1       │ 22          │ 'LOM-9002' │ 'Producto Prueba 2'    │
+│ 2       │ 27          │ 'LOM-9400' │ 'Producto para fallar' │
+│ 3       │ 28          │ 'LOM-9500' │ 'Sin imagen'           │
+└─────────┴─────────────┴────────────┴────────────────────────┘
+
+Inventario de productos en RDS
+┌─────────┬─────────────┬────────────┬─────────────────────────────┬─────────────┬───────────────┐
+│ (index) │ producto_id │ codigo     │ nombre                      │ estado_rds  │ categoria     │
+├─────────┼─────────────┼────────────┼─────────────────────────────┼─────────────┼───────────────┤
+│ 0       │ 1           │ 'LOM-0001' │ 'Teclado Kailh K2'          │ 'PUBLICADO' │ 'PERIFERICOS' │
+│ 1       │ 2           │ 'LOM-0002' │ 'Mouse Logitech G502'       │ 'PUBLICADO' │ 'PERIFERICOS' │
+│ 2       │ 3           │ 'LOM-0003' │ 'Teclado Redragon K552'     │ 'PUBLICADO' │ 'PERIFERICOS' │
+│ 3       │ 4           │ 'LOM-0004' │ 'Mouse Anker vertical'      │ 'PUBLICADO' │ 'PERIFERICOS' │
+│ 4       │ 5           │ 'LOM-0005' │ 'Teclado Logitech K380'     │ 'PUBLICADO' │ 'PERIFERICOS' │
+│ 5       │ 6           │ 'LOM-0006' │ 'Mouse Razer Basilisk'      │ 'PUBLICADO' │ 'PERIFERICOS' │
+│ 6       │ 7           │ 'LOM-0007' │ 'Teclado HyperX Alloy'      │ 'PUBLICADO' │ 'PERIFERICOS' │
+│ 7       │ 8           │ 'LOM-0008' │ 'Monitor LG 24GP500'        │ 'PUBLICADO' │ 'PANTALLAS'   │
+│ 8       │ 9           │ 'LOM-0009' │ 'Monitor Dell P2422H'       │ 'PUBLICADO' │ 'PANTALLAS'   │
+│ 9       │ 10          │ 'LOM-0010' │ 'Monitor Samsung G5'        │ 'PUBLICADO' │ 'PANTALLAS'   │
+│ 10      │ 11          │ 'LOM-0011' │ 'Monitor ASUS TUF'          │ 'PUBLICADO' │ 'PANTALLAS'   │
+│ 11      │ 12          │ 'LOM-0012' │ 'Proyector BenQ E520'       │ 'PUBLICADO' │ 'PANTALLAS'   │
+│ 12      │ 13          │ 'LOM-0013' │ 'Monitor Xiaomi 27'         │ 'PUBLICADO' │ 'PANTALLAS'   │
+│ 13      │ 14          │ 'LOM-0014' │ 'Televisor TCL 50QLED'      │ 'PUBLICADO' │ 'PANTALLAS'   │
+│ 14      │ 15          │ 'LOM-0015' │ 'Audifonos Sony WH-1000XM5' │ 'PUBLICADO' │ 'AUDIO'       │
+│ 15      │ 16          │ 'LOM-0016' │ 'Speaker JBL Charge 5'      │ 'PUBLICADO' │ 'AUDIO'       │
+│ 16      │ 17          │ 'LOM-0017' │ 'Audifonos HyperX Cloud II' │ 'PUBLICADO' │ 'AUDIO'       │
+│ 17      │ 18          │ 'LOM-0018' │ 'Microfono HyperX QuadCast' │ 'PUBLICADO' │ 'AUDIO'       │
+│ 18      │ 19          │ 'LOM-0019' │ 'Speaker Logitech Z407'     │ 'PUBLICADO' │ 'AUDIO'       │
+│ 19      │ 20          │ 'LOM-0020' │ 'AirPods Pro 2'             │ 'PUBLICADO' │ 'AUDIO'       │
+│ 20      │ 21          │ 'LOM-9001' │ 'Producto Prueba 1'         │ 'PENDIENTE' │ 'PERIFERICOS' │
+│ 21      │ 22          │ 'LOM-9002' │ 'Producto Prueba 2'         │ 'PENDIENTE' │ 'PANTALLAS'   │
+│ 22      │ 23          │ 'LOM-9100' │ 'Teclado mecanico RGB'      │ 'PUBLICADO' │ 'PERIFERICOS' │
+│ 23      │ 27          │ 'LOM-9400' │ 'Producto para fallar'      │ 'PENDIENTE' │ 'PERIFERICOS' │
+│ 24      │ 28          │ 'LOM-9500' │ 'Sin imagen'                │ 'PENDIENTE' │ 'PANTALLAS'   │
+│ 25      │ 30          │ 'LOM-9600' │ 'Regresion final'           │ 'PUBLICADO' │ 'AUDIO'       │
+└─────────┴─────────────┴────────────┴─────────────────────────────┴─────────────┴───────────────┘
+
+========================================================================
+DynamoDB - atributos y estado de procesamiento
+========================================================================
+Total de items: 26
+┌─────────┬─────────────┬──────────────────────┬─────────────────────┬─────────────────────┐
+│ (index) │ producto_id │ estado_procesamiento │ miniatura_key       │ imagen_original_key │
+├─────────┼─────────────┼──────────────────────┼─────────────────────┼─────────────────────┤
+│ 0       │ 1           │ 'LISTA'              │ 'miniaturas/1.jpg'  │ 'originales/1.png'  │
+│ 1       │ 2           │ 'PENDIENTE'          │ null                │ null                │
+│ 2       │ 3           │ 'PENDIENTE'          │ null                │ null                │
+│ 3       │ 4           │ 'PENDIENTE'          │ null                │ null                │
+│ 4       │ 5           │ 'PENDIENTE'          │ null                │ null                │
+│ 5       │ 6           │ 'PENDIENTE'          │ null                │ null                │
+│ 6       │ 7           │ 'PENDIENTE'          │ null                │ null                │
+│ 7       │ 8           │ 'PENDIENTE'          │ null                │ null                │
+│ 8       │ 9           │ 'PENDIENTE'          │ null                │ null                │
+│ 9       │ 10          │ 'PENDIENTE'          │ null                │ null                │
+│ 10      │ 11          │ 'PENDIENTE'          │ null                │ null                │
+│ 11      │ 12          │ 'PENDIENTE'          │ null                │ null                │
+│ 12      │ 13          │ 'PENDIENTE'          │ null                │ null                │
+│ 13      │ 14          │ 'PENDIENTE'          │ null                │ null                │
+│ 14      │ 15          │ 'PENDIENTE'          │ null                │ null                │
+│ 15      │ 16          │ 'PENDIENTE'          │ null                │ null                │
+│ 16      │ 17          │ 'PENDIENTE'          │ null                │ null                │
+│ 17      │ 18          │ 'PENDIENTE'          │ null                │ null                │
+│ 18      │ 19          │ 'PENDIENTE'          │ null                │ null                │
+│ 19      │ 20          │ 'PENDIENTE'          │ null                │ null                │
+│ 20      │ 21          │ 'PENDIENTE'          │ null                │ null                │
+│ 21      │ 22          │ 'PENDIENTE'          │ null                │ null                │
+│ 22      │ 23          │ 'LISTA'              │ 'miniaturas/23.jpg' │ 'originales/23.png' │
+│ 23      │ 27          │ 'ERROR'              │ null                │ 'originales/27.png' │
+│ 24      │ 28          │ 'PENDIENTE'          │ null                │ null                │
+│ 25      │ 30          │ 'LISTA'              │ 'miniaturas/30.jpg' │ 'originales/30.png' │
+└─────────┴─────────────┴──────────────────────┴─────────────────────┴─────────────────────┘
+
+========================================================================
+S3 - originales y miniaturas
+========================================================================
+
+lomax-originales
+┌─────────┬─────────────────────┬───────┬────────────────────────────┐
+│ (index) │ clave               │ bytes │ modificado                 │
+├─────────┼─────────────────────┼───────┼────────────────────────────┤
+│ 0       │ 'originales/1.png'  │ 47888 │ '2026-09-30T15:16:21.000Z' │
+│ 1       │ 'originales/23.png' │ 47888 │ '2026-09-30T16:37:43.000Z' │
+│ 2       │ 'originales/27.png' │ 57    │ '2026-09-30T16:39:40.000Z' │
+│ 3       │ 'originales/30.png' │ 47888 │ '2026-09-30T16:48:35.000Z' │
+└─────────┴─────────────────────┴───────┴────────────────────────────┘
+
+lomax-miniaturas
+┌─────────┬─────────────────────┬───────┬────────────────────────────┐
+│ (index) │ clave               │ bytes │ modificado                 │
+├─────────┼─────────────────────┼───────┼────────────────────────────┤
+│ 0       │ 'miniaturas/1.jpg'  │ 3810  │ '2026-09-30T15:17:14.000Z' │
+│ 1       │ 'miniaturas/23.jpg' │ 3810  │ '2026-09-30T16:38:55.000Z' │
+│ 2       │ 'miniaturas/30.jpg' │ 3810  │ '2026-09-30T16:48:36.000Z' │
+└─────────┴─────────────────────┴───────┴────────────────────────────┘
+
+========================================================================
+Coherencia RDS <-> DynamoDB <-> S3
+========================================================================
+┌─────────┬─────────────┬────────────┬─────────────┬─────────────┬─────────────────────┬─────────────────┬───────────┐
+│ (index) │ producto_id │ codigo     │ estado_rds  │ ddb_estado  │ miniatura_key       │ miniatura_en_s3 │ coherente │
+├─────────┼─────────────┼────────────┼─────────────┼─────────────┼─────────────────────┼─────────────────┼───────────┤
+│ 0       │ 21          │ 'LOM-9001' │ 'PENDIENTE' │ 'PENDIENTE' │ null                │ false           │ true      │
+│ 1       │ 22          │ 'LOM-9002' │ 'PENDIENTE' │ 'PENDIENTE' │ null                │ false           │ true      │
+│ 2       │ 23          │ 'LOM-9100' │ 'PUBLICADO' │ 'LISTA'     │ 'miniaturas/23.jpg' │ true            │ true      │
+│ 3       │ 27          │ 'LOM-9400' │ 'PENDIENTE' │ 'ERROR'     │ null                │ false           │ true      │
+│ 4       │ 28          │ 'LOM-9500' │ 'PENDIENTE' │ 'PENDIENTE' │ null                │ false           │ true      │
+│ 5       │ 30          │ 'LOM-9600' │ 'PUBLICADO' │ 'LISTA'     │ 'miniaturas/30.jpg' │ true            │ true      │
+└─────────┴─────────────┴────────────┴─────────────┴─────────────┴─────────────────────┴─────────────────┴───────────┘
+
+Productos PUBLICA sin miniatura confirmada en S3: 19
+┌─────────┬─────────────┬────────────┬─────────────┐
+│ (index) │ producto_id │ codigo     │ estado_rds  │
+├─────────┼─────────────┼────────────┼─────────────┤
+│ 0       │ 2           │ 'LOM-0002' │ 'PUBLICADO' │
+│ 1       │ 3           │ 'LOM-0003' │ 'PUBLICADO' │
+│ 2       │ 4           │ 'LOM-0004' │ 'PUBLICADO' │
+│ 3       │ 5           │ 'LOM-0005' │ 'PUBLICADO' │
+│ 4       │ 6           │ 'LOM-0006' │ 'PUBLICADO' │
+│ 5       │ 7           │ 'LOM-0007' │ 'PUBLICADO' │
+│ 6       │ 8           │ 'LOM-0008' │ 'PUBLICADO' │
+│ 7       │ 9           │ 'LOM-0009' │ 'PUBLICADO' │
+│ 8       │ 10          │ 'LOM-0010' │ 'PUBLICADO' │
+│ 9       │ 11          │ 'LOM-0011' │ 'PUBLICADO' │
+│ 10      │ 12          │ 'LOM-0012' │ 'PUBLICADO' │
+│ 11      │ 13          │ 'LOM-0013' │ 'PUBLICADO' │
+│ 12      │ 14          │ 'LOM-0014' │ 'PUBLICADO' │
+│ 13      │ 15          │ 'LOM-0015' │ 'PUBLICADO' │
+│ 14      │ 16          │ 'LOM-0016' │ 'PUBLICADO' │
+│ 15      │ 17          │ 'LOM-0017' │ 'PUBLICADO' │
+│ 16      │ 18          │ 'LOM-0018' │ 'PUBLICADO' │
+│ 17      │ 19          │ 'LOM-0019' │ 'PUBLICADO' │
+│ 18      │ 20          │ 'LOM-0020' │ 'PUBLICADO' │
+└─────────┴─────────────┴────────────┴─────────────┘
+Observacion: son filas del seed de la Etapa 2, que marco 20 productos como
+PUBLICA sin pasar por el flujo de imagen. La API de la Etapa 4 no crea
+productos en ese estado: verifica la miniatura antes de publicar.
+
+Productos que pasaron por el flujo de imagen:
+┌─────────┬─────────────┬────────────┬─────────────┬────────────┬─────────────────────┬─────────────────┬───────────┐
+│ (index) │ producto_id │ codigo     │ estado_rds  │ ddb_estado │ miniatura_key       │ miniatura_en_s3 │ coherente │
+├─────────┼─────────────┼────────────┼─────────────┼────────────┼─────────────────────┼─────────────────┼───────────┤
+│ 0       │ 1           │ 'LOM-0001' │ 'PUBLICADO' │ 'LISTA'    │ 'miniaturas/1.jpg'  │ true            │ true      │
+│ 1       │ 23          │ 'LOM-9100' │ 'PUBLICADO' │ 'LISTA'    │ 'miniaturas/23.jpg' │ true            │ true      │
+│ 2       │ 27          │ 'LOM-9400' │ 'PENDIENTE' │ 'ERROR'    │ null                │ false           │ true      │
+│ 3       │ 30          │ 'LOM-9600' │ 'PUBLICADO' │ 'LISTA'    │ 'miniaturas/30.jpg' │ true            │ true      │
+└─────────┴─────────────┴────────────┴─────────────┴────────────┴─────────────────────┴─────────────────┴───────────┘
+Incoherencias del flujo de imagen: 0
+OK: ningun producto se publico sin miniatura confirmada en S3.

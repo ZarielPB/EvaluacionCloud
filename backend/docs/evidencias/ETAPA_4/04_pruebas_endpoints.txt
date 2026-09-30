@@ -1,0 +1,34 @@
+
+Base: http://localhost:3000
+Fecha (UTC): 2026-09-30T17:00:16.670Z
+┌─────────┬──────────────────────────────────────────────────────┬──────────┬──────────┬──────┬────────────────────────────────────────────────┐
+│ (index) │ caso                                                 │ esperado │ obtenido │ ok   │ nota                                           │
+├─────────┼──────────────────────────────────────────────────────┼──────────┼──────────┼──────┼────────────────────────────────────────────────┤
+│ 0       │ 'GET /salud reporta 4 servicios'                     │ 200      │ 200      │ 'OK' │ 'rds/s3/dynamodb/lambda ok'                    │
+│ 1       │ 'GET /categorias lista las 3 categorias'             │ 200      │ 200      │ 'OK' │ '3 categorias'                                 │
+│ 2       │ 'POST /productos crea PENDIENTE'                     │ 201      │ 201      │ 'OK' │ 'id=35 estado=PENDIENTE'                       │
+│ 3       │ 'POST /productos 409 codigo duplicado'               │ 409      │ 409      │ 'OK' │ 'uq_productos_codigo'                          │
+│ 4       │ 'POST /productos 400 faltan campos'                  │ 400      │ 400      │ 'OK' │ 'campos_obligatorios'                          │
+│ 5       │ 'POST /productos 400 precio negativo'                │ 400      │ 400      │ 'OK' │ 'chk_productos_precio'                         │
+│ 6       │ 'POST /productos 400 categoria inexistente'          │ 400      │ 400      │ 'OK' │ 'fk_productos_categoria'                       │
+│ 7       │ 'GET /productos/:id PENDIENTE es visible en detalle' │ 200      │ 200      │ 'OK' │ 'estado=PENDIENTE'                             │
+│ 8       │ 'GET /productos no incluye el PENDIENTE'             │ 200      │ 200      │ 'OK' │ '23 publicados, pendiente ausente=true'        │
+│ 9       │ 'GET /productos/:id/imagen 404 sin miniatura'        │ 404      │ 404      │ 'OK' │ 'miniatura_no_disponible'                      │
+│ 10      │ 'POST /productos/:id/reprocesar 409 sin original'    │ 409      │ 409      │ 'OK' │ 'sin_original'                                 │
+│ 11      │ 'POST /productos/:id/imagen 413 archivo > 5 MiB'     │ 413      │ 413      │ 'OK' │ 'archivo_demasiado_grande'                     │
+│ 12      │ 'POST /productos/:id/imagen 415 MIME no admitido'    │ 415      │ 415      │ 'OK' │ 'tipo_no_admitido'                             │
+│ 13      │ 'POST /productos/:id/imagen 415 contenido no imagen' │ 415      │ 415      │ 'OK' │ 'imagen_invalida'                              │
+│ 14      │ 'GET /productos/:id sigue PENDIENTE tras 415'        │ 200      │ 200      │ 'OK' │ 'estado=PENDIENTE ddb=ERROR'                   │
+│ 15      │ 'POST /productos/:id/imagen 200 publica'             │ 200      │ 200      │ 'OK' │ 'miniaturas/35.jpg 300x200'                    │
+│ 16      │ 'GET /productos/:id ahora PUBLICADO'                 │ 200      │ 200      │ 'OK' │ 'estado=PUBLICADO'                             │
+│ 17      │ 'GET /productos ahora incluye el nuevo'              │ 200      │ 200      │ 'OK' │ 'en catalogo=true con_atributos=true'          │
+│ 18      │ 'GET /productos/:id/imagen 200 bytes correctos'      │ 200      │ 200      │ 'OK' │ 'tipo=image/jpeg bytes=3810 firma_jpeg=ffd8ff' │
+│ 19      │ 'POST /productos/:id/reprocesar 200 idempotente'     │ 200      │ 200      │ 'OK' │ 'miniaturas/35.jpg'                            │
+│ 20      │ 'POST /productos/:id/reprocesar 200 repetido'        │ 200      │ 200      │ 'OK' │ 'segunda invocacion'                           │
+│ 21      │ 'GET /productos/999999 404 inexistente'              │ 404      │ 404      │ 'OK' │ 'producto_no_encontrado'                       │
+│ 22      │ 'GET /productos/abc 400 id invalido'                 │ 400      │ 400      │ 'OK' │ 'id_invalido'                                  │
+│ 23      │ 'GET /ruta-inexistente 404'                          │ 404      │ 404      │ 'OK' │ 'ruta_no_encontrada'                           │
+└─────────┴──────────────────────────────────────────────────────┴──────────┴──────────┴──────┴────────────────────────────────────────────────┘
+
+Casos: 24   OK: 24   FALLAN: 0
+RESULTADO: todas las pruebas pasan.

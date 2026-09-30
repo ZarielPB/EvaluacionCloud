@@ -1,0 +1,22 @@
+services:
+  api:
+    build: .
+    container_name: lomax-api
+    network_mode: host
+    environment:
+      PORT: "3000"
+      PGHOST: "localhost"
+      PGPORT: "7001"
+      PGDATABASE: "lomax"
+      PGUSER: "postgres"
+      PGPASSWORD: "lomax123"
+      AWS_ENDPOINT_URL: "http://localhost:4566"
+      AWS_DEFAULT_REGION: "us-east-1"
+      AWS_ACCESS_KEY_ID: "flociadmin"
+      AWS_SECRET_ACCESS_KEY: "flociadmin"
+      LOMAX_BUCKET_ORIGENALES: "lomax-originales"
+      LOMAX_BUCKET_MINIATURAS: "lomax-miniaturas"
+      LOMAX_TABLA_ATRIBUTOS: "productos_atributos"
+      LOMAX_FUNCION_MINIATURA: "lomax-miniatura"
+      LOMAX_MAX_BYTES: "5242880"
+    restart: unless-stopped

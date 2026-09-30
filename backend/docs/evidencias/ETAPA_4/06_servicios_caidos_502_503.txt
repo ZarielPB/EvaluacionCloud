@@ -1,0 +1,56 @@
+E4 - Fallo de un servicio dependiente (502/503) sin romper el estado PENDIENTE
+Fecha (UTC): 2026-09-30T17:01:57Z
+
+Se levantan dos copias aisladas de la MISMA imagen, para no tocar la instancia real:
+  :3100 -> RDS en puerto 7999 (inexistente)
+  :3200 -> AWS en puerto 4999 (inexistente)
+
+############ Instancia con RDS caido ############
+
+== GET /salud ==
+{"estado":"degradado","servicios":{"rds":{"ok":false,"error":""},"s3":{"ok":true,"buckets":["lomax-originales","awslambda-us-east-1-tasks","lomax-miniaturas"]},"dynamodb":{"ok":true,"tabla":"productos_atributos","estado":"ACTIVE","items":29},"lambda":{"ok":true,"funcion":"lomax-miniatura","estado":"Active"}}}
+HTTP 503
+== GET /categorias ==
+{"error":{"mensaje":"El servicio de base de datos no esta disponible","paso":"rds","codigo":"ECONNREFUSED"}}
+HTTP 503
+== POST /productos ==
+{"error":{"mensaje":"El servicio de base de datos no esta disponible","paso":"rds","codigo":"ECONNREFUSED"}}
+HTTP 503
+
+############ Instancia con AWS caido (RDS sano) ############
+
+== GET /salud ==
+{"estado":"degradado","servicios":{"rds":{"ok":true,"base":"lomax","version":"PostgreSQL 15.19"},"s3":{"ok":false,"error":""},"dynamodb":{"ok":false,"error":""},"lambda":{"ok":false,"error":""}}}
+HTTP 503
+== POST /productos/30/imagen (S3 inalcanzable) ==
+{"error":{"mensaje":"Un servicio de AWS no esta disponible","paso":"s3_originales","codigo":"ECONNREFUSED"}}
+HTTP 503
+== POST /productos/30/reprocesar (DynamoDB inalcanzable) ==
+{"error":{"mensaje":"Un servicio de AWS no esta disponible","paso":"dynamodb","codigo":"ECONNREFUSED"}}
+HTTP 503
+== GET /productos/30 (DynamoDB inalcanzable) ==
+{"error":{"mensaje":"Un servicio de AWS no esta disponible","paso":"dynamodb","codigo":"ECONNREFUSED"}}
+HTTP 503
+== GET /productos/30/imagen (DynamoDB inalcanzable) ==
+{"error":{"mensaje":"Un servicio de AWS no esta disponible","paso":"dynamodb","codigo":"ECONNREFUSED"}}
+HTTP 503
+
+############ El estado del producto NO se altera por el fallo ############
+
+Producto de prueba creado para esto: 39
+
+== Intento de subir imagen con S3 caido ==
+{"error":{"mensaje":"Un servicio de AWS no esta disponible","paso":"s3_originales","codigo":"ECONNREFUSED"}}
+HTTP 503
+== Estado final en RDS (debe seguir PENDIENTE) ==
+{
+  "producto_id": 39,
+  "estado": "PENDIENTE",
+  "estado_procesamiento": "PENDIENTE"
+}
+
+= Republicar un producto ya publicado tampoco lo degrada ==
+{
+  "producto_id": 30,
+  "estado": "PUBLICADO"
+}
