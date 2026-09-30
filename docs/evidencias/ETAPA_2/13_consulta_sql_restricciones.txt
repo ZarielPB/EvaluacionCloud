@@ -1,24 +1,17 @@
-        conname         | contype |                                                    definicion                                                    
-------------------------+---------+------------------------------------------------------------------------------------------------------------------
- chk_productos_estado   | c       | CHECK (((estado)::text = ANY ((ARRAY['PENDIENTE'::character varying, 'PUBLICADO'::character varying])::text[])))
- chk_productos_precio   | c       | CHECK ((precio >= (0)::numeric))
- fk_productos_categoria | f       | FOREIGN KEY (categoria_id) REFERENCES categorias(categoria_id) ON UPDATE CASCADE ON DELETE RESTRICT
- pk_productos           | p       | PRIMARY KEY (producto_id)
- uq_productos_codigo    | u       | UNIQUE (codigo)
-(5 rows)
+   tabla    |        conname         |                                                    definicion                                                    
+------------+------------------------+------------------------------------------------------------------------------------------------------------------
+ categorias | pk_categorias          | PRIMARY KEY (categoria_id)
+ categorias | uq_categorias_nombre   | UNIQUE (nombre)
+ productos  | chk_productos_estado   | CHECK (((estado)::text = ANY ((ARRAY['PENDIENTE'::character varying, 'PUBLICADO'::character varying])::text[])))
+ productos  | chk_productos_precio   | CHECK ((precio >= (0)::numeric))
+ productos  | fk_productos_categoria | FOREIGN KEY (categoria_id) REFERENCES categorias(categoria_id) ON UPDATE CASCADE ON DELETE RESTRICT
+ productos  | pk_productos           | PRIMARY KEY (producto_id)
+ productos  | uq_productos_codigo    | UNIQUE (codigo)
+(7 rows)
 
- table_name | ordinal_position |  column_name   |        data_type         | is_nullable 
-------------+------------------+----------------+--------------------------+-------------
- categorias |                1 | categoria_id   | integer                  | NO
- categorias |                2 | nombre         | character varying        | NO
- categorias |                3 | descripcion    | text                     | YES
- productos  |                1 | producto_id    | bigint                   | NO
- productos  |                2 | codigo         | character varying        | NO
- productos  |                3 | nombre         | character varying        | NO
- productos  |                4 | descripcion    | text                     | NO
- productos  |                5 | precio         | numeric                  | NO
- productos  |                6 | categoria_id   | integer                  | NO
- productos  |                7 | fecha_creacion | timestamp with time zone | NO
- productos  |                8 | estado         | character varying        | NO
-(11 rows)
+ table_name | columnas 
+------------+----------
+ categorias |        3
+ productos  |        8
+(2 rows)
 
