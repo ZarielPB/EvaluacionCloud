@@ -148,11 +148,11 @@ arbirto y el endpoint de reprocesamiento completa el registro sin duplicarlo.
 | Navegador | Nginx proxy | HTTP | host `8080` (NodePort `30080`) | Punto unico de entrada |
 | Nginx proxy | Frontend | HTTP | `80` | Ruta `/` |
 | Nginx proxy | API | HTTP | `3000` | Ruta `/api/*` |
-| API | RDS PostgreSQL | TCP (PostgreSQL wire) | `5432` | URL por variable de entorno |
-| API | DynamoDB | HTTP (`application/x-amz-json-1.0`) | `8000` | LocalStack/DynamoDB local |
+| API | RDS PostgreSQL | TCP (PostgreSQL wire) | `7001` | URL por variable de entorno |
+| API | DynamoDB | HTTP (`application/x-amz-json-1.0`) | `4566` | LocalStack/DynamoDB local |
 | API | S3 (`PutObject`, `GetObject`) | HTTP (REST S3) | `4566` | Endpoint de FLOCI |
 | API | Lambda | HTTP, invocacion **sincrona** | `4566` | `InvocationType=RequestResponse` |
-| Lambda | S3 y DynamoDB | HTTP | `4566` / `8000` | Mismo endpoint de FLOCI |
+| Lambda | S3 y DynamoDB | HTTP | `4566` | Mismo endpoint de FLOCI |
 | Kubelet/API server | EKS | HTTPS (Kube API) | `6443` | `kubectl` |
 
 > **Nota importante y honesta:** el diagrama muestra los **puertos de servicio**

@@ -43,7 +43,7 @@ PNG: `docs/evidencias/ETAPA_1/arquitectura.png` · Documento: `docs/ETAPA_1_ARQU
 ## Estado del Proyecto
 
 - [x] Etapa 1 — Diseño de la arquitectura ✅
-- [x] Etapa 2 — Persistencia con RDS y DynamoDB✅
+- [x] Etapa 2 — Persistencia con RDS y DynamoDB ✅
 - [ ] Etapa 3 — AWS con S3 y Lambda
 - [ ] Etapa 4 — Backend con API y endpoints
 - [ ] Etapa 5 — Frontend con dashboard del catálogo
