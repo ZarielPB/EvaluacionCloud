@@ -1,0 +1,96 @@
+
+###### Huella de partida (debe coincidir con 89cbbb10659cb11901f991c398ab3a3b) ######
+ n  | suma_precios |              huella              
+----+--------------+----------------------------------
+ 22 |      4833.30 | 89cbbb10659cb11901f991c398ab3a3b
+(1 row)
+
+
+###### PRUEBA 1 - INSERCION VALIDA (debe ACEPTARSE) ######
+BEGIN
+INSERT 0 1
+         momento          | filas_deben_ser_1 
+--------------------------+-------------------
+ dentro de la transaccion |                 1
+(1 row)
+
+ROLLBACK
+       momento        | filas_deben_ser_0 
+----------------------+-------------------
+ despues del rollback |                 0
+(1 row)
+
+
+###### PRUEBA 2 - CODIGO DUPLICADO (debe RECHAZARSE, SQLSTATE 23505) ######
+ filas_antes 
+-------------
+          22
+(1 row)
+
+BEGIN
+ERROR:  duplicate key value violates unique constraint "uq_productos_codigo"
+DETAIL:  Key (codigo)=(LOM-0001) already exists.
+ROLLBACK
+ filas_despues 
+---------------
+            22
+(1 row)
+
+ filas_con_lom_0001_deben_ser_1 
+--------------------------------
+                              1
+(1 row)
+
+
+###### PRUEBA 3 - PRECIO NEGATIVO (debe RECHAZARSE, SQLSTATE 23514) ######
+ filas_antes 
+-------------
+          22
+(1 row)
+
+BEGIN
+ERROR:  new row for relation "productos" violates check constraint "chk_productos_precio"
+DETAIL:  Failing row contains (25, LOM-TEST2, Precio Negativo, Intento de insertar un precio menor que cero, -50.00, 1, 2026-09-30 09:33:23.551339+00, PENDIENTE).
+ROLLBACK
+ filas_despues 
+---------------
+            22
+(1 row)
+
+ filas_lom_test2_deben_ser_0 
+-----------------------------
+                           0
+(1 row)
+
+
+###### PRUEBA 4 - CATEGORIA INEXISTENTE (debe RECHAZARSE, SQLSTATE 23503) ######
+ filas_antes 
+-------------
+          22
+(1 row)
+
+BEGIN
+ERROR:  insert or update on table "productos" violates foreign key constraint "fk_productos_categoria"
+DETAIL:  Key (categoria_id)=(999) is not present in table "categorias".
+ROLLBACK
+ filas_despues 
+---------------
+            22
+(1 row)
+
+ filas_lom_test3_deben_ser_0 
+-----------------------------
+                           0
+(1 row)
+
+
+###### VEREDICTO: la base quedo INTACTA (huella igual a la de partida) ######
+ n  | suma_precios |              huella              
+----+--------------+----------------------------------
+ 22 |      4833.30 | 89cbbb10659cb11901f991c398ab3a3b
+(1 row)
+
+ codigo | repeticiones 
+--------+--------------
+(0 rows)
+

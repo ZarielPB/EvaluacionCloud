@@ -1,0 +1,19 @@
+Contenedor RDS antes: floci-rds-db-6042D1E7C42F4B51A728CCF3-fdeb0a
+NAMES                                          STATUS
+floci-rds-db-6042D1E7C42F4B51A728CCF3-fdeb0a   Up 2 hours
+lomax-floci                                    Up 2 hours (healthy)
+local     floci-rds-db-60D906F8C8BD4BF6A62389BE-1b9cc9
+local     floci-rds-db-88BD345586AC4DB098178670-d9fd5a
+local     floci-rds-db-6042D1E7C42F4B51A728CCF3-fdeb0a
+local     floci-rds-db-9895897497C34AFE982D8561-626bc4
+local     floci-rds-db-B8CF9C5E4FE148CC8D811F88-7f1342
+local     floci-rds-db-F62A30A43F3545D789EE7C76-e17efd
+local     lomax-floci-data
+--- RDS: huella antes ---
+ productos |  suma   |              huella              
+-----------+---------+----------------------------------
+        22 | 4833.30 | 89cbbb10659cb11901f991c398ab3a3b
+(1 row)
+
+--- DynamoDB: items antes ---
+22

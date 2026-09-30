@@ -1,0 +1,54 @@
+{
+    "TableDescription": {
+        "AttributeDefinitions": [
+            {
+                "AttributeName": "producto_id",
+                "AttributeType": "N"
+            }
+        ],
+        "TableName": "productos_atributos",
+        "KeySchema": [
+            {
+                "AttributeName": "producto_id",
+                "KeyType": "HASH"
+            }
+        ],
+        "TableStatus": "ACTIVE",
+        "CreationDateTime": "2026-09-30T05:47:08-04:00",
+        "ProvisionedThroughput": {
+            "NumberOfDecreasesToday": 0,
+            "ReadCapacityUnits": 0,
+            "WriteCapacityUnits": 0
+        },
+        "TableSizeBytes": 0,
+        "ItemCount": 0,
+        "TableArn": "arn:aws:dynamodb:us-east-1:000000000000:table/productos_atributos",
+        "TableId": "78d8f2c4-5e40-4587-b009-0f7bcc90afeb",
+        "BillingModeSummary": {
+            "BillingMode": "PAY_PER_REQUEST",
+            "LastUpdateToPayPerRequestDateTime": "2026-09-30T05:47:08-04:00"
+        },
+        "TableClassSummary": {
+            "TableClass": "STANDARD"
+        },
+        "DeletionProtectionEnabled": false,
+        "WarmThroughput": {
+            "ReadUnitsPerSecond": 0,
+            "WriteUnitsPerSecond": 0,
+            "Status": "ACTIVE"
+        }
+    }
+}
+---------------------------------------------------------------
+|                        DescribeTable                        |
++--------+-------------------+--------+-----------------------+
+| Estado |    Facturacion    | Items  |        Nombre         |
++--------+-------------------+--------+-----------------------+
+|  ACTIVE|  PAY_PER_REQUEST  |  0     |  productos_atributos  |
++--------+-------------------+--------+-----------------------+
+||                          Claves                           ||
+|+-----------------------------------+-----------------------+|
+||           AttributeName           |        KeyType        ||
+|+-----------------------------------+-----------------------+|
+||  producto_id                      |  HASH                 ||
+|+-----------------------------------+-----------------------+|

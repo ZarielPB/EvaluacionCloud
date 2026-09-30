@@ -1,0 +1,3 @@
+RDS tiene 22 IDs
+DynamoDB tiene 22 IDs
+diff sin salida: los 22 producto_id coinciden uno a uno (relacion 1:1 RDS-DynamoDB)

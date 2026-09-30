@@ -1,0 +1,5 @@
+ categorias | productos | publicados | pendientes 
+------------+-----------+------------+------------
+          3 |        22 |         20 |          2
+(1 row)
+

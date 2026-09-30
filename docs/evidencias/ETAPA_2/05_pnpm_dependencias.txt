@@ -1,0 +1,9 @@
+Legend: production dependency, optional only, dev only
+
+lomax-scripts@1.0.0 /home/jeysi/Documentos/UNIVALLE/6to Semestre/Tecnologias_Emergentes/EvaluacionCloud/scripts (PRIVATE)
+│
+│   dependencies:
+├── @aws-sdk/client-dynamodb@3.1142.0
+└── @aws-sdk/lib-dynamodb@3.1142.0
+
+2 packages

@@ -1,0 +1,16 @@
+        sequencename         | last_value 
+-----------------------------+------------
+ categorias_categoria_id_seq |          3
+ productos_producto_id_seq   |         22
+(2 rows)
+
+INSERT 0 1
+ categoria_id |     nombre      
+--------------+-----------------
+            1 | PERIFERICOS
+            2 | PANTALLAS
+            3 | AUDIO
+            4 | PRUEBA_TEMPORAL
+(4 rows)
+
+DELETE 1

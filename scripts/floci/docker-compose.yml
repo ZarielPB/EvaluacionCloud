@@ -1,0 +1,29 @@
+services:
+  floci:
+    image: floci/floci:latest
+    container_name: lomax-floci
+    privileged: true
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    ports:
+      - "4566:4566"
+      - "7001-7099:7001-7099"
+    environment:
+      - DEFAULT_REGION=us-east-1
+      - EAGER_SERVICE_LOADING=true
+      - FLOCI_STORAGE_MODE=persistent
+      - FLOCI_SERVICES_RDS_DEFAULT_POSTGRES_IMAGE=postgres:15-alpine
+    volumes:
+      - lomax-floci-data:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - lomax-net
+
+networks:
+  lomax-net:
+    name: lomax-net
+
+volumes:
+  lomax-floci-data:
+    name: lomax-floci-data

@@ -1,0 +1,139 @@
+===== producto_id=1 =====
+{
+    "Item": {
+        "producto_id": {
+            "N": "1"
+        },
+        "familia": {
+            "S": "PERIFERICOS"
+        },
+        "atributos": {
+            "M": {
+                "conexion": {
+                    "S": "Bluetooth 5.1"
+                },
+                "distribucion": {
+                    "S": "ANSI 75%"
+                }
+            }
+        },
+        "imagen_original_key": {
+            "NULL": true
+        },
+        "miniatura_key": {
+            "NULL": true
+        },
+        "estado_procesamiento": {
+            "S": "PENDIENTE"
+        },
+        "actualizado_en": {
+            "S": "2026-09-30T10:40:28.344Z"
+        }
+    }
+}
+
+===== producto_id=10 =====
+{
+    "Item": {
+        "producto_id": {
+            "N": "10"
+        },
+        "familia": {
+            "S": "PANTALLAS"
+        },
+        "atributos": {
+            "M": {
+                "pulgadas": {
+                    "N": "27"
+                },
+                "resolucion": {
+                    "S": "2560x1440"
+                }
+            }
+        },
+        "imagen_original_key": {
+            "NULL": true
+        },
+        "miniatura_key": {
+            "NULL": true
+        },
+        "estado_procesamiento": {
+            "S": "PENDIENTE"
+        },
+        "actualizado_en": {
+            "S": "2026-09-30T10:40:28.345Z"
+        }
+    }
+}
+
+===== producto_id=15 =====
+{
+    "Item": {
+        "producto_id": {
+            "N": "15"
+        },
+        "familia": {
+            "S": "AUDIO"
+        },
+        "atributos": {
+            "M": {
+                "tipo": {
+                    "S": "over-ear"
+                },
+                "conectividad": {
+                    "S": "Bluetooth 5.2"
+                }
+            }
+        },
+        "imagen_original_key": {
+            "NULL": true
+        },
+        "miniatura_key": {
+            "NULL": true
+        },
+        "estado_procesamiento": {
+            "S": "PENDIENTE"
+        },
+        "actualizado_en": {
+            "S": "2026-09-30T10:40:28.345Z"
+        }
+    }
+}
+
+===== producto_id=12 =====
+{
+    "Item": {
+        "producto_id": {
+            "N": "12"
+        },
+        "familia": {
+            "S": "PANTALLAS"
+        },
+        "atributos": {
+            "M": {
+                "pulgadas": {
+                    "N": "300"
+                },
+                "resolucion": {
+                    "S": "1920x1080"
+                },
+                "tipo": {
+                    "S": "proyector"
+                }
+            }
+        },
+        "imagen_original_key": {
+            "NULL": true
+        },
+        "miniatura_key": {
+            "NULL": true
+        },
+        "estado_procesamiento": {
+            "S": "PENDIENTE"
+        },
+        "actualizado_en": {
+            "S": "2026-09-30T10:40:28.345Z"
+        }
+    }
+}
+

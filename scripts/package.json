@@ -1,0 +1,25 @@
+{
+  "name": "lomax-scripts",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Scripts de carga y verificacion del proyecto LOMAX SA (Etapa 2)",
+  "author": "jeysi702",
+  "license": "UNLICENSED",
+  "scripts": {
+    "seed:dynamodb": "node seed-dynamodb.mjs",
+    "get:dynamodb": "node get-dynamodb.mjs"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.6.0",
+      "onFail": "download"
+    }
+  },
+  "packageManager": "pnpm@12.6.0",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.1142.0",
+    "@aws-sdk/lib-dynamodb": "^3.1142.0"
+  }
+}
