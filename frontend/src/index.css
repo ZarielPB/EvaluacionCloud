@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-lienzo text-tinta font-sans antialiased;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-primario-500 ring-offset-2 ring-offset-lienzo;
+  }
+}
+
+@layer components {
+  /* Esqueleto de carga: el mismo bloque que la tarjeta real, sin contenido. */
+  .esqueleto {
+    @apply animate-pulse rounded-control bg-slate-200;
+  }
+
+  .etiqueta {
+    @apply inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
