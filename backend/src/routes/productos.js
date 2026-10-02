@@ -13,6 +13,13 @@ const FAMILIAS_POR_CATEGORIA = {
   AUDIO: 'AUDIO',
 };
 
+// Longitudes reales de scripts/init-rds.sql. Validarlas aqui evita que un
+// VARCHAR desbordado llegue a Postgres y salga como 500 `22001`.
+const LONGITUDES = {
+  codigo: 20,
+  nombre: 120,
+};
+
 function validarRegistro(cuerpo) {
   const faltantes = [];
   if (!cuerpo?.codigo || String(cuerpo.codigo).trim() === '') faltantes.push('codigo');
@@ -41,9 +48,27 @@ function validarRegistro(cuerpo) {
     });
   }
 
+  const codigo = String(cuerpo.codigo).trim();
+  const nombre = String(cuerpo.nombre).trim();
+
+  const demasiadoLargo = [];
+  if (codigo.length > LONGITUDES.codigo) {
+    demasiadoLargo.push({ campo: 'codigo', longitud: codigo.length, maximo: LONGITUDES.codigo });
+  }
+  if (nombre.length > LONGITUDES.nombre) {
+    demasiadoLargo.push({ campo: 'nombre', longitud: nombre.length, maximo: LONGITUDES.nombre });
+  }
+  if (demasiadoLargo.length > 0) {
+    throw new ApiError(400, 'Un valor supera la longitud maxima permitida', {
+      paso: 'validacion_entrada',
+      codigo: 'valor_demasiado_largo',
+      detalle: { campos: demasiadoLargo },
+    });
+  }
+
   return {
-    codigo: String(cuerpo.codigo).trim(),
-    nombre: String(cuerpo.nombre).trim(),
+    codigo,
+    nombre,
     descripcion: String(cuerpo.descripcion).trim(),
     precio,
     categoria_id: Number(cuerpo.categoria_id),
@@ -80,6 +105,20 @@ productosRouter.post('/', async (req, res, next) => {
     const familia = req.body.familia ? String(req.body.familia).toUpperCase() : null;
 
     const producto = await conTransaccion(async (cliente) => {
+      // La categoria se resuelve en la misma transaccion: la FK ya la exige,
+      // y de paso da el nombre real para etiquetar el item de DynamoDB.
+      const { rows: categorias } = await cliente.query(
+        `SELECT nombre FROM categorias WHERE categoria_id = $1`,
+        [datos.categoria_id],
+      );
+      if (categorias.length === 0) {
+        throw new ApiError(400, 'La categoria indicada no existe', {
+          paso: 'validacion_entrada',
+          codigo: 'fk_productos_categoria',
+          detalle: { categoria_id: datos.categoria_id },
+        });
+      }
+
       const { rows } = await cliente.query(
         `INSERT INTO productos (codigo, nombre, descripcion, precio, categoria_id, estado)
          VALUES ($1, $2, $3, $4, $5, 'PENDIENTE')
@@ -87,8 +126,14 @@ productosRouter.post('/', async (req, res, next) => {
                    fecha_creacion, estado`,
         [datos.codigo, datos.nombre, datos.descripcion, datos.precio, datos.categoria_id],
       );
-      return rows[0];
+      return { ...rows[0], categoria: categorias[0].nombre };
     });
+
+    // Si el cliente no manda `familia` se deriva del nombre de la categoria.
+    // Antes se indexaba el mapa con `undefined`, que siempre daba `undefined`
+    // y dejaba el item de DynamoDB con `familia: null`.
+    const familiaResuelta =
+      familia ?? FAMILIAS_POR_CATEGORIA[producto.categoria] ?? producto.categoria;
 
     try {
       await dynamo.send(
@@ -96,7 +141,7 @@ productosRouter.post('/', async (req, res, next) => {
           TableName: config.dynamodb.tabla,
           Item: {
             producto_id: Number(producto.producto_id),
-            familia: familia ?? FAMILIAS_POR_CATEGORIA[undefined] ?? null,
+            familia: familiaResuelta,
             atributos,
             imagen_original_key: null,
             miniatura_key: null,

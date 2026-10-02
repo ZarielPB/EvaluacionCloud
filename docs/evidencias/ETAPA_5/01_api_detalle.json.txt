@@ -1,0 +1,341 @@
+Evidencia de contrato de API para la vista de detalle
+Generado: 2026-10-02 19:03:10 UTC
+Todas las respuestas obtenidas a traves del proxy en http://localhost:8080/api
+
+## GET /api/salud
+{
+  "estado": "ok",
+  "servicios": {
+    "rds": {
+      "ok": true,
+      "base": "lomax",
+      "version": "PostgreSQL 15.19"
+    },
+    "s3": {
+      "ok": true,
+      "buckets": [
+        "lomax-originales",
+        "awslambda-us-east-1-tasks",
+        "lomax-miniaturas"
+      ]
+    },
+    "dynamodb": {
+      "ok": true,
+      "tabla": "productos_atributos",
+      "estado": "ACTIVE",
+      "items": 32
+    },
+    "lambda": {
+      "ok": true,
+      "funcion": "lomax-miniatura",
+      "estado": "Active"
+    }
+  }
+}
+
+## GET /api/categorias
+[
+  {
+    "categoria_id": 1,
+    "nombre": "PERIFERICOS",
+    "descripcion": "Teclados, mouse y dispositivos"
+  },
+  {
+    "categoria_id": 2,
+    "nombre": "PANTALLAS",
+    "descripcion": "Monitores y proyectores"
+  },
+  {
+    "categoria_id": 3,
+    "nombre": "AUDIO",
+    "descripcion": "Audifonos y speakers"
+  }
+]
+
+## GET /api/productos?limite=3 (extracto)
+[
+  {
+    "id": 1,
+    "codigo": "LOM-0001",
+    "nombre": "Teclado Kailh K2",
+    "estado": "PUBLICADO",
+    "categoria": "PERIFERICOS",
+    "precio": 189.9,
+    "miniatura_key": "miniaturas/1.jpg"
+  },
+  {
+    "id": 2,
+    "codigo": "LOM-0002",
+    "nombre": "Mouse Logitech G502",
+    "estado": "PUBLICADO",
+    "categoria": "PERIFERICOS",
+    "precio": 89.5,
+    "miniatura_key": null
+  },
+  {
+    "id": 3,
+    "codigo": "LOM-0003",
+    "nombre": "Teclado Redragon K552",
+    "estado": "PUBLICADO",
+    "categoria": "PERIFERICOS",
+    "precio": 65,
+    "miniatura_key": null
+  },
+  {
+    "id": 4,
+    "codigo": "LOM-0004",
+    "nombre": "Mouse Anker vertical",
+    "estado": "PUBLICADO",
+    "categoria": "PERIFERICOS",
+    "precio": 54.9,
+    "miniatura_key": null
+  },
+  {
+    "id": 5,
+    "codigo": "LOM-0005",
+    "nombre": "Teclado Logitech K380",
+    "estado": "PUBLICADO",
+    "categoria": "PERIFERICOS",
+    "precio": 39.9,
+    "miniatura_key": null
+  },
+  {
+    "id": 6,
+    "codigo": "LOM-0006",
+    "nombre": "Mouse Razer Basilisk",
+    "estado": "PUBLICADO",
+    "categoria": "PERIFERICOS",
+    "precio": 79,
+    "miniatura_key": null
+  },
+  {
+    "id": 7,
+    "codigo": "LOM-0007",
+    "nombre": "Teclado HyperX Alloy",
+    "estado": "PUBLICADO",
+    "categoria": "PERIFERICOS",
+    "precio": 139,
+    "miniatura_key": null
+  },
+  {
+    "id": 8,
+    "codigo": "LOM-0008",
+    "nombre": "Monitor LG 24GP500",
+    "estado": "PUBLICADO",
+    "categoria": "PANTALLAS",
+    "precio": 199,
+    "miniatura_key": null
+  },
+  {
+    "id": 9,
+    "codigo": "LOM-0009",
+    "nombre": "Monitor Dell P2422H",
+    "estado": "PUBLICADO",
+    "categoria": "PANTALLAS",
+    "precio": 235.5,
+    "miniatura_key": null
+  },
+  {
+    "id": 10,
+    "codigo": "LOM-0010",
+    "nombre": "Monitor Samsung G5",
+    "estado": "PUBLICADO",
+    "categoria": "PANTALLAS",
+    "precio": 549,
+    "miniatura_key": null
+  },
+  {
+    "id": 11,
+    "codigo": "LOM-0011",
+    "nombre": "Monitor ASUS TUF",
+    "estado": "PUBLICADO",
+    "categoria": "PANTALLAS",
+    "precio": 329.9,
+    "miniatura_key": null
+  },
+  {
+    "id": 12,
+    "codigo": "LOM-0012",
+    "nombre": "Proyector BenQ E520",
+    "estado": "PUBLICADO",
+    "categoria": "PANTALLAS",
+    "precio": 799,
+    "miniatura_key": null
+  },
+  {
+    "id": 13,
+    "codigo": "LOM-0013",
+    "nombre": "Monitor Xiaomi 27",
+    "estado": "PUBLICADO",
+    "categoria": "PANTALLAS",
+    "precio": 289,
+    "miniatura_key": null
+  },
+  {
+    "id": 14,
+    "codigo": "LOM-0014",
+    "nombre": "Televisor TCL 50QLED",
+    "estado": "PUBLICADO",
+    "categoria": "PANTALLAS",
+    "precio": 649,
+    "miniatura_key": null
+  },
+  {
+    "id": 15,
+    "codigo": "LOM-0015",
+    "nombre": "Audifonos Sony WH-1000XM5",
+    "estado": "PUBLICADO",
+    "categoria": "AUDIO",
+    "precio": 349,
+    "miniatura_key": null
+  },
+  {
+    "id": 16,
+    "codigo": "LOM-0016",
+    "nombre": "Speaker JBL Charge 5",
+    "estado": "PUBLICADO",
+    "categoria": "AUDIO",
+    "precio": 159.9,
+    "miniatura_key": null
+  },
+  {
+    "id": 17,
+    "codigo": "LOM-0017",
+    "nombre": "Audifonos HyperX Cloud II",
+    "estado": "PUBLICADO",
+    "categoria": "AUDIO",
+    "precio": 119,
+    "miniatura_key": null
+  },
+  {
+    "id": 18,
+    "codigo": "LOM-0018",
+    "nombre": "Microfono HyperX QuadCast",
+    "estado": "PUBLICADO",
+    "categoria": "AUDIO",
+    "precio": 129.9,
+    "miniatura_key": null
+  },
+  {
+    "id": 19,
+    "codigo": "LOM-0019",
+    "nombre": "Speaker Logitech Z407",
+    "estado": "PUBLICADO",
+    "categoria": "AUDIO",
+    "precio": 99,
+    "miniatura_key": null
+  },
+  {
+    "id": 20,
+    "codigo": "LOM-0020",
+    "nombre": "AirPods Pro 2",
+    "estado": "PUBLICADO",
+    "categoria": "AUDIO",
+    "precio": 219,
+    "miniatura_key": null
+  },
+  {
+    "id": 23,
+    "codigo": "LOM-TST-1790962697",
+    "nombre": "Teclado prueba",
+    "estado": "PUBLICADO",
+    "categoria": "PERIFERICOS",
+    "precio": 249.9,
+    "miniatura_key": "miniaturas/23.jpg"
+  },
+  {
+    "id": 25,
+    "codigo": "LOM-FIN-1790963014",
+    "nombre": "Monitor 27 4K",
+    "estado": "PUBLICADO",
+    "categoria": "PANTALLAS",
+    "precio": 1299,
+    "miniatura_key": "miniaturas/25.jpg"
+  },
+  {
+    "id": 26,
+    "codigo": "LOM-0030",
+    "nombre": "Teclado Mecanico Rosa",
+    "estado": "PUBLICADO",
+    "categoria": "PERIFERICOS",
+    "precio": 250,
+    "miniatura_key": "miniaturas/26.jpg"
+  },
+  {
+    "id": 27,
+    "codigo": "LOM-0032",
+    "nombre": "Teclado Mecanico Azul",
+    "estado": "PUBLICADO",
+    "categoria": "PERIFERICOS",
+    "precio": 260,
+    "miniatura_key": "miniaturas/27.jpg"
+  },
+  {
+    "id": 31,
+    "codigo": "LOM-PROXY-1790966733",
+    "nombre": "Prueba via proxy",
+    "estado": "PUBLICADO",
+    "categoria": "PERIFERICOS",
+    "precio": 99.5,
+    "miniatura_key": "miniaturas/31.jpg"
+  },
+  {
+    "id": 32,
+    "codigo": "LOM-ORIGINAL-01",
+    "nombre": "Original guardado",
+    "estado": "PUBLICADO",
+    "categoria": "PERIFERICOS",
+    "precio": 55,
+    "miniatura_key": "miniaturas/32.jpg"
+  }
+]
+
+## GET /api/productos/25 (detalle publicado)
+{
+  "producto_id": 25,
+  "codigo": "LOM-FIN-1790963014",
+  "nombre": "Monitor 27 4K",
+  "descripcion": "Monitor IPS 27 pulgadas 4K con ajuste de altura",
+  "precio": 1299,
+  "categoria_id": 2,
+  "fecha_creacion": "2026-10-02T17:43:34.958Z",
+  "estado": "PUBLICADO",
+  "categoria": "PANTALLAS",
+  "atributos": {
+    "pulgadas": 27,
+    "resolucion": "3840x2160",
+    "tecnologia": "IPS"
+  },
+  "miniatura_key": "miniaturas/25.jpg",
+  "imagen_original_key": "originales/25.png",
+  "estado_procesamiento": "LISTA",
+  "error_motivo": null,
+  "imagen_disponible": true
+}
+
+## GET /api/productos/21 (detalle pendiente sin imagen)
+{
+  "producto_id": 21,
+  "codigo": "LOM-9001",
+  "nombre": "Producto Prueba 1",
+  "descripcion": "Registro incompleto",
+  "precio": 49.9,
+  "categoria_id": 1,
+  "fecha_creacion": "2026-09-30T13:14:57.236Z",
+  "estado": "PENDIENTE",
+  "categoria": "PERIFERICOS",
+  "atributos": {
+    "conexion": "USB cable",
+    "distribucion": "compacto"
+  },
+  "miniatura_key": null,
+  "imagen_original_key": null,
+  "estado_procesamiento": "PENDIENTE",
+  "error_motivo": null,
+  "imagen_disponible": false
+}
+
+## GET /api/productos/9999 (inexistente)
+{"error":{"mensaje":"No existe un producto con producto_id 9999","paso":"rds","codigo":"producto_no_encontrado","detalle":{"producto_id":9999}}}
+{"error":{"mensaje":"No existe un producto con producto_id 9999","paso":"rds","codigo":"producto_no_encontrado","detalle":{"producto_id":9999}}}
+HTTP 404

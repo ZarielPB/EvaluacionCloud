@@ -46,11 +46,24 @@ export interface ProductoCreado {
   mensaje: string;
 }
 
+/** La Lambda reporta el original, la miniatura y el lado maximo aplicado. */
+export interface DimImagenes {
+  original: MedidaImagen;
+  miniatura: MedidaImagen;
+  lado_maximo: number;
+}
+
+export interface MedidaImagen {
+  ancho: number;
+  alto: number;
+  bytes: number;
+}
+
 export interface ImagenPublicada {
   producto_id: number;
   estado: EstadoProducto;
   miniatura_key: string;
-  dimensiones: { ancho: number; alto: number } | null;
+  dimensiones: DimImagenes | null;
   reprocesado?: boolean;
   mensaje: string;
 }

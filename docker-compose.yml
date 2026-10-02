@@ -1,0 +1,72 @@
+# LOMAX SA - Etapas 4 y 5 (frontend + API + proxy).
+#
+# FLOCI no se declara aqui a proposito: lo levanta su propio compose en
+# scripts/floci/docker-compose.yml porque expone el rango 7001-7099 que usa el
+# RDS emulado. Levantalo antes que este archivo:
+#
+#   docker compose -f scripts/floci/docker-compose.yml up -d
+#   docker compose up -d --build
+#
+# Los tres servicios usan network_mode: host. La API lo necesita desde la
+# Etapa 4 para alcanzar el RDS de FLOCI en localhost:7001; el proxy y el
+# frontend se suman ahi para que todo se hable por loopback. La alternativa
+# documentada en la Etapa 1 (redes bridge con nombres de servicio) exige una
+# regla de ufw que esta maquina no tiene abierta. Ver la nota de desviacion en
+# docs/ETAPA_5_FRONTEND.md.
+#
+# Reparto de puertos en el host:
+#   8080  proxy    -> unico puerto expuesto, el punto de entrada
+#   8081  frontend -> solo loopback, lo usa el proxy
+#   3000  api      -> solo loopback, lo usa el proxy
+#
+# Los tres binds a loopback estan declarados en la configuracion de cada
+# servicio (nginx.conf y backend/src/config.js), no en este archivo: con
+# network_mode: host el puerto se publica igual y por eso hay que atarlo en el
+# proceso, no con `ports`.
+#
+# backend/docker-compose.yml levanta solo la API. No se ejecutan los dos a la
+# vez porque ambos declaran el contenedor lomax-api.
+
+services:
+  api:
+    build: ./backend
+    container_name: lomax-api
+    network_mode: host
+    environment:
+      HOST: "127.0.0.1"
+      PORT: "3000"
+      PGHOST: "localhost"
+      PGPORT: "7001"
+      PGDATABASE: "lomax"
+      PGUSER: "postgres"
+      PGPASSWORD: "lomax123"
+      AWS_ENDPOINT_URL: "http://localhost:4566"
+      AWS_DEFAULT_REGION: "us-east-1"
+      AWS_ACCESS_KEY_ID: "flociadmin"
+      AWS_SECRET_ACCESS_KEY: "flociadmin"
+      LOMAX_BUCKET_ORIGENALES: "lomax-originales"
+      LOMAX_BUCKET_MINIATURAS: "lomax-miniaturas"
+      LOMAX_TABLA_ATRIBUTOS: "productos_atributos"
+      LOMAX_FUNCION_MINIATURA: "lomax-miniatura"
+      LOMAX_MAX_BYTES: "5242880"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        # Relativa a proposito: el navegador pide /api al proxy, nunca a la API.
+        VITE_API_URL: /api
+    container_name: lomax-frontend
+    network_mode: host
+    restart: unless-stopped
+
+  proxy:
+    build:
+      context: ./proxy
+    container_name: lomax-proxy
+    network_mode: host
+    restart: unless-stopped
+    depends_on:
+      - frontend
+      - api

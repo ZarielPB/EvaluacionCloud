@@ -2,9 +2,11 @@ import { MAX_BYTES_IMAGEN, TIPOS_IMAGEN_ACEPTADOS } from '../services/api';
 import { type CampoAtributo } from '../data/atributos';
 import { formatearBytes } from './formato';
 
+// Los limites replican scripts/init-rds.sql: productos.codigo es VARCHAR(20)
+// y productos.nombre es VARCHAR(120). Si divergen, Postgres responde 22001.
 export const LIMITES = {
-  codigo: 50,
-  nombre: 100,
+  codigo: 20,
+  nombre: 120,
   descripcion: 500,
   precioMinimo: 0.01,
 } as const;

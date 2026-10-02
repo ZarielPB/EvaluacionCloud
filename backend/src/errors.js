@@ -47,6 +47,9 @@ const SQLSTATE_GENERICOS = {
   '23514': { estado: 400, mensaje: 'El valor no cumple la restriccion del catalogo' },
   '22P02': { estado: 400, mensaje: 'Formato de dato invalido' },
   '22003': { estado: 400, mensaje: 'El valor numerico esta fuera de rango' },
+  // Valor mas largo que la columna: sin esto un VARCHAR desbordado terminaba
+  // en un 500 que sugeria un bug de la API en vez de un dato invalido.
+  '22001': { estado: 400, mensaje: 'Un valor supera la longitud maxima de su columna' },
 };
 
 function nombreDeRestriccion(error) {

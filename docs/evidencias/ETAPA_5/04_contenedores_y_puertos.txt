@@ -1,0 +1,10 @@
+NAME             STATUS
+lomax-api        Up 8 minutes
+lomax-frontend   Up 8 minutes (healthy)
+lomax-proxy      Up 8 minutes (healthy)
+
+LISTEN 0      511        127.0.0.1:3000       0.0.0.0:*
+LISTEN 0      511          0.0.0.0:8080       0.0.0.0:*
+LISTEN 0      511        127.0.0.1:8081       0.0.0.0:*
+
+Healthcheck: se usa 127.0.0.1 y no localhost porque en Alpine localhost resuelve a ::1 y Nginx escucha solo en IPv4.

@@ -1,0 +1,39 @@
+ok     campo vacio sin intentar no se reporta
+ok     campo vacio tras intentar se reporta
+ok     codigo con espacio es invalido
+ok     codigo valido
+ok     codigo con guion bajo
+ok     nombre excede 120
+ok     nombre justo en 120
+ok     codigo excede 20
+ok     codigo justo en 20
+ok     descripcion excede 500
+ok     precio no numerico
+ok     precio bajo minimo
+ok     precio valido
+
+esquema PERIFERICOS: conexion*, distribucion*, teclas
+ok     PERIFERICOS sin requeridos tras intentar
+ok     PERIFERICOS vacio sin intentar
+ok     atributo requerido presente
+ok     sin categoria no hay errores
+ok     numero fuera de rango
+ok     seleccion invalida rechazada
+ok     sin archivo no hay error
+ok     png valido
+ok     gif rechazado
+ok     5MB exactos pasa
+ok     excede 5MB rechazado
+ok     archivo vacio
+ok     formulario completo sin errores
+ok     precio convertido a numero
+ok     categoria convertida a numero
+ok     atributos incluidos en el payload
+ok     texto normalizado sin espacios
+ok     formulario vacio tiene errores
+ok     formulario vacio reporta 5 campos base
+ok     formulario vacio sin intentar no falla
+ok     imagen invalida se reporta
+ok     atributos de otra familia se ignoran
+
+TODAS LAS PRUEBAS PASARON

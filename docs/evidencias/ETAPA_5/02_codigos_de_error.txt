@@ -1,0 +1,11 @@
+Codigos de respuesta verificados a traves del proxy (punto unico 8080)
+
+peticion                                       codigo
+GET /api/productos/9999                        404
+POST /api/productos (sin descripcion)          400
+POST /api/productos (codigo de 26 chars)       400
+POST /api/productos (codigo duplicado)         409
+POST /api/productos/35/imagen (gif)            415
+POST /api/productos/35/imagen (6 MB)           413
+POST /api/productos/35/imagen (png valido)     200
+POST /api/productos/35/reprocesar              200

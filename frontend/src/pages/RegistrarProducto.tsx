@@ -229,9 +229,9 @@ export function RegistrarProducto() {
         setProgreso(100);
         toast.exito(
           'Producto publicado exitosamente',
-          `producto_id ${respuesta.producto_id} · ${
-            respuesta.dimensiones ? `${respuesta.dimensiones.ancho}x${respuesta.dimensiones.alto}` : 'miniatura generada'
-          }`,
+          respuesta.dimensiones
+            ? `producto_id ${respuesta.producto_id} · miniatura ${respuesta.dimensiones.miniatura.ancho}x${respuesta.dimensiones.miniatura.alto} · ${formatearBytes(respuesta.dimensiones.miniatura.bytes)}`
+            : `producto_id ${respuesta.producto_id} · miniatura generada`,
         );
       } catch (fallo) {
         manejarErrorImagen(fallo);

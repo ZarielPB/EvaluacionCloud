@@ -23,6 +23,7 @@ hojas de cálculo y las carpetas de imágenes dispersas.
 | 2 — Persistencia RDS y DynamoDB | [`docs/ETAPA_2_PERSISTENCIA.md`](docs/ETAPA_2_PERSISTENCIA.md) | [`evidencias/ETAPA_2/`](docs/evidencias/ETAPA_2/) |
 | 3 — AWS con S3 y Lambda | [`docs/ETAPA_3_S3_LAMBDA.md`](docs/ETAPA_3_S3_LAMBDA.md) | [`evidencias/ETAPA_3/`](docs/evidencias/ETAPA_3/) |
 | 4 — API y Dockerfile | [`docs/ETAPA_4_BACKEND_API.md`](docs/ETAPA_4_BACKEND_API.md) | [`evidencias/ETAPA_4/`](docs/evidencias/ETAPA_4/) |
+| 5 — Frontend del catálogo | [`docs/ETAPA_5_FRONTEND.md`](docs/ETAPA_5_FRONTEND.md) | [`evidencias/ETAPA_5/`](docs/evidencias/ETAPA_5/) |
 
 - Diagrama de arquitectura: [`docs/arquitectura.drawio`](docs/arquitectura.drawio) ·
   fuente textual [`docs/arquitectura.mmd`](docs/arquitectura.mmd) ·
@@ -30,9 +31,9 @@ hojas de cálculo y las carpetas de imágenes dispersas.
 
 ## Estructura
 
-    frontend/          Aplicación web (formulario, catálogo, detalle)
+    frontend/          Aplicación React + TypeScript + Tailwind (pnpm) + Dockerfile
     backend/           API Node.js 26 + Express (pnpm) + Dockerfile
-    proxy/             Configuración de Nginx (reverse proxy)
+    proxy/             Nginx: punto único de entrada (Dockerfile + nginx.conf)
     k8s/               Manifiestos de EKS (Deployments, Services, Secrets)
     lambda_function/   Función AWS Lambda de miniaturas (Python 3.12 + Pillow)
     scripts/           Scripts reproducibles de creación, carga y verificación
@@ -62,7 +63,7 @@ hojas de cálculo y las carpetas de imágenes dispersas.
 | Tabla DynamoDB + atributos variables | jeysi702 | 2 | P3 | Hecho |
 | S3 + Lambda miniaturas 300x300 | ZarielPB | 3 | P4 | Hecho |
 | API Node.js + endpoints | jeysi702 | 4 | P5 | Hecho |
-| Frontend dashboard del catálogo | ZarielPB | 5 | P6 | Pendiente |
+| Frontend dashboard del catálogo | ZarielPB | 5 | P6 | Hecho |
 | Publicación de imágenes en ECR | jeysi702 | 6 | P7 | Pendiente |
 | Despliegue y validación en EKS | ZarielPB | 7 | P8 | Pendiente |
 | Repositorio con README, scripts y evidencias | Ambos | Todas | P9 | En curso |
@@ -73,18 +74,28 @@ hojas de cálculo y las carpetas de imágenes dispersas.
 - [x] Etapa 2 — Persistencia con RDS y DynamoDB
 - [x] Etapa 3 — AWS con S3 y Lambda
 - [x] Etapa 4 — Backend con API y endpoints
-- [ ] Etapa 5 — Frontend con dashboard del catálogo
+- [x] Etapa 5 — Frontend con catálogo, registro y detalle
 - [ ] Etapa 6 — Publicación de imágenes en ECR
 - [ ] Etapa 7 — Despliegue y validación en EKS
 
 ## Entorno local
 
-    export AWS_ACCESS_KEY_ID=test
-    export AWS_SECRET_ACCESS_KEY=test
+    export AWS_ACCESS_KEY_ID=flociadmin
+    export AWS_SECRET_ACCESS_KEY=flociadmin
     export AWS_DEFAULT_REGION=us-east-1
     export AWS_ENDPOINT_URL=http://localhost:4566
 
 Levantar FLOCI: `docker compose -f scripts/floci/docker-compose.yml up -d`
+
+**Frontend en desarrollo** (puerto `5180`, proxy `/api` incluido):
+
+    docker compose --project-directory backend up -d --build
+    cd frontend && pnpm install && pnpm dev
+
+**Punto único de entrada** (Nginx en el puerto `8080`):
+
+    docker compose -f scripts/floci/docker-compose.yml up -d
+    docker compose up -d --build
 
 ## Enlaces
 

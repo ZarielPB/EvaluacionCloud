@@ -108,8 +108,8 @@ app.use('/productos', imagenRouter);
 app.use(noEncontrado);
 app.use(manejadorDeErrores);
 
-const servidor = app.listen(config.puerto, () => {
-  console.log(`[api] escuchando en http://localhost:${config.puerto}`);
+const servidor = app.listen(config.puerto, config.host, () => {
+  console.log(`[api] escuchando en http://${config.host}:${config.puerto}`);
   console.log(`[api] rds ${config.rds.host}:${config.rds.puerto}/${config.rds.base}`);
   console.log(`[api] aws ${config.aws.endpoint}`);
 });

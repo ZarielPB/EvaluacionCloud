@@ -5,6 +5,9 @@ const entero = (valor, porDefecto) => {
 
 export const config = {
   puerto: entero(process.env.PORT, 3000),
+  // Solo loopback por defecto: la API es interna y la consume el proxy.
+  // Para exponerla en otra interfaz (por ejemplo en EKS) se define HOST=0.0.0.0.
+  host: process.env.HOST || '127.0.0.1',
 
   rds: {
     host: process.env.PGHOST || 'localhost',
